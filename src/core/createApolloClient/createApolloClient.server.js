@@ -9,12 +9,13 @@ import createCache from './createCache';
 export default function createApolloClient(schema) {
   const link = from([
     onError(({ graphQLErrors, networkError }) => {
-      if (graphQLErrors)
+      if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
           console.warn(
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
           ),
         );
+      }
       if (networkError) console.warn(`[Network error]: ${networkError}`);
     }),
     new SchemaLink({ ...schema }),

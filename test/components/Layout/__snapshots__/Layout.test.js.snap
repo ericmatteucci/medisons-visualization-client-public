@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout renders children correctly 1`] = `
+<div>
+  <div
+    className="root"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="banner"
+      >
+        <h1
+          className="bannerTitle"
+        >
+          MediSons
+        </h1>
+        <p
+          className="bannerDesc"
+        >
+          PhysioRange
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

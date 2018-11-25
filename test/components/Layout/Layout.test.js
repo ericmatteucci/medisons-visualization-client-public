@@ -14,9 +14,9 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import createApolloClient from '../../core/createApolloClient';
-import App from '../App';
-import Layout from './Layout';
+import createApolloClient from '../../../src/core/createApolloClient/createApolloClient.server';
+import App from '../../../src/components/App';
+import Layout from '../../../src/components/Layout/Layout';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);

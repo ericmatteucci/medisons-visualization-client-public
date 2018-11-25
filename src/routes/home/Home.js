@@ -29,7 +29,9 @@ class Home extends React.Component {
   };
 
   render() {
-    const { data: { loading, reactjsGetAllNews } } = this.props;
+    const {
+      data: { loading, reactjsGetAllNews },
+    } = this.props;
     return (
       <div className={s.root}>
         <div className={s.container}>
@@ -54,4 +56,7 @@ class Home extends React.Component {
   }
 }
 
-export default compose(withStyles(s), graphql(newsQuery))(Home);
+export default compose(
+  withStyles(s),
+  graphql(newsQuery),
+)(Home);
