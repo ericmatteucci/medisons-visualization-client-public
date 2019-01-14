@@ -11,6 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
+import MetaComponent from './MetaComponent/MetaComponent';
 
 const ContextType = {
   // Enables critical path CSS rendering
@@ -67,7 +68,10 @@ class App extends React.PureComponent {
     // NOTE: If you need to add or modify header, footer etc. of the app,
     // please do that inside the Layout component.
     return (
-      <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
+      <div>
+        <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
+        <MetaComponent />
+      </div>
     );
   }
 }

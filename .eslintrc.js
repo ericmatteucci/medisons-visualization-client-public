@@ -52,6 +52,7 @@ module.exports = {
       'error',
       {
         allow: ['__typename'],
+        allowAfterThis: true,
       },
     ],
 
