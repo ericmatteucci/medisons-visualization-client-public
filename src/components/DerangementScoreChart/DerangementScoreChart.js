@@ -24,6 +24,11 @@ type DerangementScoreChartBoundPropTypes = {
 
 type DerangementScoreChartPropTypes = DerangementScoreChartBoundPropTypes;
 
+/**
+ * The main chart for the application. Shows the derangement score that is calculated
+ * and stored in the DB. This chart has independent sizing and functionality from the
+ * other chart types.
+ */
 class DerangementScoreChart extends React.Component<DerangementScoreChartPropTypes> {
   static propTypes = {
     chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
