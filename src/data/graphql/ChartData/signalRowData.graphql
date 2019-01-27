@@ -1,0 +1,6 @@
+query getChartData {
+  signalDataRow(name: $signalName) {
+    timestampMilli
+    value
+  }
+}

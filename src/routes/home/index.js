@@ -7,23 +7,10 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React from 'react';
-import Home from './Home';
-import newsQuery from './news.graphql';
-import Layout from '../../components/Layout';
-
-async function action({ client }) {
-  const data = await client.query({
-    query: newsQuery,
-  });
+async function action() {
   return {
-    title: 'React Starter Kit',
+    title: 'PhysioRange',
     chunks: ['home'],
-    component: (
-      <Layout>
-        <Home news={data.reactjsGetAllNews} />
-      </Layout>
-    ),
   };
 }
 

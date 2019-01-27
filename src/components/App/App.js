@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
-import MetaComponent from './MetaComponent/MetaComponent';
+import MetaComponent from '../MetaComponent/MetaComponent';
 
 const ContextType = {
   // Enables critical path CSS rendering
@@ -53,7 +53,6 @@ const ContextType = {
 class App extends React.PureComponent {
   static propTypes = {
     context: PropTypes.shape(ContextType).isRequired,
-    children: PropTypes.element.isRequired,
   };
 
   static childContextTypes = ContextType;
@@ -69,8 +68,9 @@ class App extends React.PureComponent {
     // please do that inside the Layout component.
     return (
       <div>
-        <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
-        <MetaComponent />
+        <ApolloProvider client={client}>
+          <MetaComponent />
+        </ApolloProvider>
       </div>
     );
   }

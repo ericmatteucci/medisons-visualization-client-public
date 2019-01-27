@@ -12,6 +12,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { ChartTitles } from '../../constants/DisplayConstants';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './DerangementScoreChart.css';
@@ -50,7 +51,7 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
       <div className={s.main}>
         <Chart
           type="line"
-          title="Derangement Score"
+          title={ChartTitles.DERANGEMENT_SCORE}
           chartData={this.props.chartData}
           overrideStyles={s.chart}
           overrideChartStyle={this.chartStyle}

@@ -2,6 +2,12 @@ import { merge } from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
 
 import {
+  schema as ChartDataSchema,
+  resolvers as ChartDataResolvers,
+  queries as ChartDataQueries,
+} from './graphql/ChartData/schema';
+
+import {
   schema as NewsSchema,
   resolvers as NewsResolvers,
   queries as NewsQueries,
@@ -28,6 +34,7 @@ const RootQuery = [
   type RootQuery {
     ${NewsQueries}
     ${DatabaseQueries}
+    ${ChartDataQueries}
   }
 `,
 ];
@@ -60,7 +67,7 @@ const SchemaDefinition = [
 
 // Merge all of the resolver objects together
 // Put schema together into one array of schema strings
-const resolvers = merge(NewsResolvers, DatabaseResolvers);
+const resolvers = merge(NewsResolvers, DatabaseResolvers, ChartDataResolvers);
 
 const schema = [
   ...SchemaDefinition,
@@ -69,6 +76,7 @@ const schema = [
 
   ...NewsSchema,
   ...DatabaseSchema,
+  ...ChartDataSchema,
 ];
 
 export default makeExecutableSchema({

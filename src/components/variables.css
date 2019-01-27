@@ -28,4 +28,14 @@
   --screen-sm-min: 768px;  /* Small screen / tablet */
   --screen-md-min: 992px;  /* Medium screen / desktop */
   --screen-lg-min: 1200px; /* Large screen / wide desktop */
+
+  /*
+   * Media queries breakpoints
+   * ========================================================================== */
+  --screen-sm-min-width: 800px;  /* Small screen */
+  --screen-md-min-width: 1024px; /* Medium screen */
+  --screen-lg-min-width: 1200px; /* Large screen */
+  --screen-sm-min-height: 460px;
+  --screen-md-min-height: 500px;
+  --screen-lg-min-height: 800px;
 }
