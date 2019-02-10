@@ -1,0 +1,8 @@
+query MultiSignalDataQuery($names: [String!]!) {
+  multiSignalData(names: $names) {
+    name
+    frequency
+    timestamp
+    dataPoints
+  }
+}

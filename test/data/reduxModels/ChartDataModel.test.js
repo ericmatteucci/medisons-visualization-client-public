@@ -10,9 +10,9 @@
 /* eslint-env jest */
 /* eslint-disable padded-blocks, no-unused-expressions */
 
-import ChartDataModel from '../../../src/data/reduxModels/ChartDataModel';
+import SignalDataModel from '../../../src/data/reduxModels/SignalDataModel';
 
-describe('ChartDataModel', () => {
+describe('SignalDataModel', () => {
   const testData = [333, 444, 555, 666, 777];
   const testDomainValues = [1, 2, 3, 4, 5];
 
@@ -20,17 +20,14 @@ describe('ChartDataModel', () => {
   const mismatchedTestDomainValues = [3, 4, 5, 6, 7, 8, 9];
 
   test('Should construct and get valid data.', () => {
-    const testChartData = ChartDataModel.create(testData, testDomainValues);
+    const testChartData = SignalDataModel.create(testData, testDomainValues);
 
     expect(testChartData.getData()).toEqual(testData);
     expect(testChartData.getDomainValues()).toEqual(testDomainValues);
   });
 
   test('Should return empty data and domainValues when inputs are of mismatched length.', () => {
-    const testChartData = ChartDataModel.create(
-      mismatchedTestData,
-      mismatchedTestDomainValues,
-    );
+    const testChartData = SignalDataModel.create(mismatchedTestData, mismatchedTestDomainValues);
 
     expect(testChartData.getData()).toEqual([]);
     expect(testChartData.getDomainValues()).toEqual([]);

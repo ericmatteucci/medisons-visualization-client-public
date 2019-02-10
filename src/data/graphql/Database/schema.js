@@ -24,8 +24,4 @@ export const queries = [...GetAllUsersQueries, ...GetLoggedInUserQueries];
 
 export const mutations = [...CreateUser];
 
-export const resolvers = merge(
-  GetAllUsersResolver,
-  GetLoggedInUserResolver,
-  CreateUserResolver,
-);
+export const resolvers = merge(GetAllUsersResolver, GetLoggedInUserResolver, CreateUserResolver);

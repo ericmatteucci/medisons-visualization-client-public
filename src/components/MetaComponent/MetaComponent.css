@@ -11,19 +11,23 @@
 
 .main {
   position: relative;
-  min-width: 300px;
-  min-height: 600px;
+  min-width: 100%;
+  min-height: 100%;
   width: inherit;
   height: inherit;
+  overflow: hidden;
+  padding-top: 2%;
 
   /* flex options for child components */
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .scoreChart {
   position: relative;
+  min-height: 100%;
+  min-width: 60%;
 
   /* flex options for child components */
   display: flex;

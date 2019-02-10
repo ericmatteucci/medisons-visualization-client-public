@@ -15,7 +15,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './Chart.css';
-import ChartDataModel from '../../data/reduxModels/ChartDataModel';
+import ChartDataModel from '../../data/models/ChartDataModel';
+import TimeUtilities from '../../lib/TimeUtilities';
 
 type ChartInjectedPropTypes = {
   type: string,
@@ -52,6 +53,9 @@ class Chart extends React.Component<ChartPropTypes> {
     tooltip: {},
     xAxis: {
       data: this.props.chartData.getDomainValues(),
+      axisLabel: {
+        formatter: TimeUtilities.epochToLocalDate,
+      },
     },
     yAxis: {},
     series: [
@@ -63,18 +67,13 @@ class Chart extends React.Component<ChartPropTypes> {
   });
 
   _getDefaultChartStyle = (): Object => ({
-    position: 'relative',
-    height: '50%',
-    width: '100%',
+    minHeight: '100%',
+    minWidth: '100%',
   });
 
   render() {
     return (
-      <div
-        className={
-          this.props.overrideStyles ? this.props.overrideStyles : s.main
-        }
-      >
+      <div className={this.props.overrideStyles ? this.props.overrideStyles : s.main}>
         <ReactEcharts
           option={this._getChartOptions()}
           notMerge

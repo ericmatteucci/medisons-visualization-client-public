@@ -1,0 +1,6 @@
+query SignalDataRowQuery($name: String!) {
+  signalDataRow(name: $name) {
+    timestamp
+    value
+  }
+}

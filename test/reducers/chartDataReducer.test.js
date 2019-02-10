@@ -10,35 +10,35 @@
 /* eslint-env jest */
 /* eslint-disable padded-blocks, no-unused-expressions */
 
-import chartDataReducer from '../../src/reducers/chartDataReducer';
+import signalDataReducer from '../../src/reducers/signalDataReducer';
 
-import ChartDataModel from '../../src/data/reduxModels/ChartDataModel';
-import CompositeChartDataModel from '../../src/data/reduxModels/CompositeChartDataModel';
+import SignalDataModel from '../../src/data/reduxModels/SignalDataModel';
+import CompositeSignalDataModel from '../../src/data/reduxModels/CompositeSignalDataModel';
 import {
   updateDerangementScoreChartAction,
   updateOxygenSaturationChartAction,
-} from '../../src/actions/ChartActions';
+} from '../../src/actions/SignalDataActions';
 
-describe('chartDataReducer', () => {
+describe('signalDataReducer', () => {
   const initialDerangementScoreData = [-1, -1, -1];
   const initialDerangementScoreDomainValues = [6, 7, 8];
 
   const initialOxygenSaturationData = [-2, -2, -2, -2];
   const initialOxygenSaturationDomainValues = [12, 13, 14, 15];
 
-  const initialState = new CompositeChartDataModel();
-  initialState.derangementScore = ChartDataModel.create(
+  const initialState = new CompositeSignalDataModel();
+  initialState.derangementScore = SignalDataModel.create(
     initialDerangementScoreData,
     initialDerangementScoreDomainValues,
   );
-  initialState.oxygenSaturation = ChartDataModel.create(
+  initialState.oxygenSaturation = SignalDataModel.create(
     initialOxygenSaturationData,
     initialOxygenSaturationDomainValues,
   );
 
   const testData = [333, 444, 555, 666, 777];
   const testDomainValues = [1, 2, 3, 4, 5];
-  const testChartDataModel = ChartDataModel.create(testData, testDomainValues);
+  const testChartDataModel = SignalDataModel.create(testData, testDomainValues);
 
   const mismatchedTestData = [888, 999, 777];
   const mismatchedTestDomainValues = [3, 4, 5, 6, 7, 8, 9];
@@ -54,13 +54,10 @@ describe('chartDataReducer', () => {
       testChartDataModel.getDomainValues(),
     );
 
-    const newState = chartDataReducer(initialState, action);
+    const newState = signalDataReducer(initialState, action);
 
     assertChartDataModel(testChartDataModel, newState.derangementScore);
-    assertChartDataModel(
-      initialState.oxygenSaturation,
-      newState.oxygenSaturation,
-    );
+    assertChartDataModel(initialState.oxygenSaturation, newState.oxygenSaturation);
   });
 
   test('Should update the oxygen saturation state with the new chart data.', () => {
@@ -69,13 +66,10 @@ describe('chartDataReducer', () => {
       testChartDataModel.getDomainValues(),
     );
 
-    const newState = chartDataReducer(initialState, action);
+    const newState = signalDataReducer(initialState, action);
 
     assertChartDataModel(testChartDataModel, newState.oxygenSaturation);
-    assertChartDataModel(
-      initialState.derangementScore,
-      newState.derangementScore,
-    );
+    assertChartDataModel(initialState.derangementScore, newState.derangementScore);
   });
 
   test(
@@ -87,7 +81,7 @@ describe('chartDataReducer', () => {
         mismatchedTestDomainValues,
       );
 
-      const newState = chartDataReducer(initialState, action);
+      const newState = signalDataReducer(initialState, action);
 
       expect(newState).toEqual(initialState);
     },
@@ -102,7 +96,7 @@ describe('chartDataReducer', () => {
         mismatchedTestDomainValues,
       );
 
-      const newState = chartDataReducer(initialState, action);
+      const newState = signalDataReducer(initialState, action);
 
       expect(newState).toEqual(initialState);
     },

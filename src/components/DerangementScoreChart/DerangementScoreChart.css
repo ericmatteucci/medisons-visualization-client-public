@@ -11,8 +11,8 @@
 
 .main {
   position: relative;
-  min-width: 600px;
-  min-height: 300px;
+  min-width: 100%;
+  min-height: 100%;
   height: inherit;
 
   /* flex options for child components */
@@ -21,6 +21,6 @@
 }
 
 .chart {
-  height: 500px;
-  width: 500px;
+  height: 100%;
+  width: 100%;
 }

@@ -1,0 +1,15 @@
+build/**
+flow-typed/**
+jest.config.js
+node_modules/**
+src/client.js
+src/config.js
+src/components/Html.js
+src/createFetch.js
+src/data/schema.js
+src/DOMUtils.js
+src/passport.js
+src/router.js
+src/server.js
+src/store/logger/logger.server.js
+tools/**

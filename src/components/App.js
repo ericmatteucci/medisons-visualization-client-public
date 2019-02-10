@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
-import MetaComponent from './MetaComponent/MetaComponent';
+import SignalDataLoadContainer from '../containers/signalDataLoadContainer';
 
 const ContextType = {
   // Enables critical path CSS rendering
@@ -62,15 +62,30 @@ class App extends React.PureComponent {
     return this.props.context;
   }
 
+  _getStyle = () => ({
+    width: '100%',
+    height: '100%',
+    'min-height': '100%',
+    'min-width': '100%',
+  });
+
+  _getContainerStyle = () => ({
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+  });
+
   render() {
     // Here, we are at universe level, sure? ;-)
     const { client } = this.props.context;
     // NOTE: If you need to add or modify header, footer etc. of the app,
     // please do that inside the Layout component.
     return (
-      <div>
+      <div style={this._getStyle()}>
         <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
-        <MetaComponent />
+        <div style={this._getContainerStyle()}>
+          <SignalDataLoadContainer />
+        </div>
       </div>
     );
   }
