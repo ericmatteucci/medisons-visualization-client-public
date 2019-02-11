@@ -12,7 +12,7 @@
 .main {
   position: relative;
   width: inherit;
-  height: inherit;
+  height: 100%;
 
   /* flex options for child components */
   display: flex;
@@ -23,7 +23,7 @@
 .column {
   position: relative;
   width: inherit;
-  height: inherit;
+  height: 100%;
 
   /* flex options for child components */
   display: flex;

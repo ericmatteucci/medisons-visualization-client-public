@@ -15,7 +15,6 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from '../Header';
-import MetaComponent from '../MetaComponent/MetaComponent';
 
 class Layout extends React.Component {
   static propTypes = {
@@ -26,7 +25,6 @@ class Layout extends React.Component {
     return (
       <div>
         <Header />
-        <MetaComponent />
       </div>
     );
   }

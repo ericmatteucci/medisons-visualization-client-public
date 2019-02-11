@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
 import SignalDataLoadContainer from '../containers/signalDataLoadContainer';
+import MetaComponent from './MetaComponent/MetaComponent';
 
 const ContextType = {
   // Enables critical path CSS rendering
@@ -65,8 +66,8 @@ class App extends React.PureComponent {
   _getStyle = () => ({
     width: '100%',
     height: '100%',
-    'min-height': '100%',
-    'min-width': '100%',
+    minHeight: '100%',
+    minWidth: '100%',
   });
 
   _getContainerStyle = () => ({
@@ -86,6 +87,7 @@ class App extends React.PureComponent {
         <div style={this._getContainerStyle()}>
           <SignalDataLoadContainer />
         </div>
+        <MetaComponent />
       </div>
     );
   }
