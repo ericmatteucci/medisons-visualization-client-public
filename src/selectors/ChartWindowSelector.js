@@ -14,7 +14,7 @@ import {
   oxygenSaturationDomainValuesSelector,
   derangementScoreDomainValuesSelector,
 } from './SignalDomainValueSelector';
-import { CHART_WINDOW_SIZE } from '../constants/ValueConstants';
+import { CHART_WINDOW_SIZE, ONE_SECOND_MS } from '../constants/ValueConstants';
 import ChartDataModel from '../data/models/ChartDataModel';
 
 const bloodPressureState = (state: Object): SignalDataModel =>
@@ -36,16 +36,13 @@ export class ChartWindowSelector {
     data: SignalDataType,
     domainValues: SignalDomainValuesType,
   ): ChartDataModel => {
-    if (frequency > 0) {
-      const numberOfSamples = CHART_WINDOW_SIZE / frequency;
+    // frequency is in samples per second, need to convert to cycles per millisecond
+    const numberOfSamples = CHART_WINDOW_SIZE * (frequency / ONE_SECOND_MS);
 
-      const end = data.length;
-      const start = end - numberOfSamples > 0 ? end - numberOfSamples : 0;
+    const end = data.length;
+    const start = end - numberOfSamples > 0 ? end - numberOfSamples : 0;
 
-      return new ChartDataModel(name, data.slice(start, end), domainValues.slice(start, end));
-    }
-
-    return new ChartDataModel(name, [], []);
+    return new ChartDataModel(name, data.slice(start, end), domainValues.slice(start, end));
   };
 
   static bloodPressureChartWindowSelectorFcn = (
