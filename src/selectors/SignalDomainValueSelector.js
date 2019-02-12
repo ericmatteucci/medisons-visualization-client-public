@@ -7,6 +7,7 @@ import type {
   SignalDomainValuesType,
 } from '../data/reduxModels/SignalDataModel';
 import SignalDataModel from '../data/reduxModels/SignalDataModel';
+import { ONE_SECOND_MS } from '../constants/ValueConstants';
 
 const bloodPressureState = (state: Object): SignalDataModel =>
   state.signalDataReducer.bloodPressure;
@@ -28,8 +29,10 @@ export class SignalDomainValueSelector {
   ): SignalDomainValuesType => {
     const ret = new Array(dataLength);
 
+    const samplePeriodMs = ONE_SECOND_MS / frequency;
+
     for (let i = 0; i < dataLength; i++) {
-      ret[i] = timestamp + i * frequency;
+      ret[i] = timestamp + i * samplePeriodMs;
     }
 
     return ret;
