@@ -67,8 +67,8 @@ class Chart extends React.Component<ChartPropTypes> {
   });
 
   _getDefaultChartStyle = (): Object => ({
-    minHeight: '100%',
-    minWidth: '100%',
+    width: '100%',
+    height: '100%',
   });
 
   render() {
