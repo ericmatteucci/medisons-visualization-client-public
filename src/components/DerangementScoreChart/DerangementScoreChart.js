@@ -16,7 +16,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './DerangementScoreChart.css';
 import Chart from '../Chart/Chart';
-import ChartDataModel from '../../data/reduxModels/ChartDataModel';
+import ChartDataModel from '../../data/models/ChartDataModel';
+import { derangementScoreChartWindowSelector } from '../../selectors/ChartWindowSelector';
+import { MAIN_CHART_DISPLAY_NAME } from '../../constants/DisplayConstants';
 
 type DerangementScoreChartBoundPropTypes = {
   chartData: ChartDataModel,
@@ -34,10 +36,8 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
     chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
   };
 
-  static mapStateToProps = (
-    state: any,
-  ): DerangementScoreChartBoundPropTypes => ({
-    chartData: state.chartDataReducer.derangementScore,
+  static mapStateToProps = (state: any): DerangementScoreChartBoundPropTypes => ({
+    chartData: derangementScoreChartWindowSelector(state),
   });
 
   chartStyle = () => ({
@@ -50,7 +50,7 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
       <div className={s.main}>
         <Chart
           type="line"
-          title="Derangement Score"
+          title={MAIN_CHART_DISPLAY_NAME}
           chartData={this.props.chartData}
           overrideStyles={s.chart}
           overrideChartStyle={this.chartStyle}
@@ -60,8 +60,8 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
   }
 }
 
-const ConnectedDerangementScoreChartContainer = connect(
-  DerangementScoreChart.mapStateToProps,
-)(DerangementScoreChart);
+const ConnectedDerangementScoreChartContainer = connect(DerangementScoreChart.mapStateToProps)(
+  DerangementScoreChart,
+);
 
 export default withStyles(s)(ConnectedDerangementScoreChartContainer);

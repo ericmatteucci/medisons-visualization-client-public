@@ -17,7 +17,7 @@ async function action({ client }) {
     query: newsQuery,
   });
   return {
-    title: 'React Starter Kit',
+    title: 'PhysioRange',
     chunks: ['home'],
     component: (
       <Layout>

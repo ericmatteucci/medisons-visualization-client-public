@@ -10,7 +10,4 @@ export type AsyncActionType = (dispatch: DispatchFunctionType) => void;
 
 export type RetriedAsyncActionType = AsyncActionType;
 
-export type AnyActionType =
-  | ActionType
-  | AsyncActionType
-  | RetriedAsyncActionType;
+export type AnyActionType = ActionType | AsyncActionType | RetriedAsyncActionType;

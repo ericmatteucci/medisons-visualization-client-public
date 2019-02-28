@@ -34,10 +34,15 @@ class Html extends React.Component {
     scripts: [],
   };
 
+  _getStyle = () => ({
+    width: '100%',
+    height: '100%',
+  });
+
   render() {
     const { title, description, styles, scripts, app, children } = this.props;
     return (
-      <html className="no-js" lang="en">
+      <html className="no-js" lang="en" style={this._getStyle()}>
         <head>
           <meta charSet="utf-8" />
           <meta httpEquiv="x-ua-compatible" content="ie=edge" />
@@ -57,11 +62,9 @@ class Html extends React.Component {
             />
           ))}
         </head>
-        <body>
-          <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
-          <script
-            dangerouslySetInnerHTML={{ __html: `window.App=${serialize(app)}` }}
-          />
+        <body style={this._getStyle()}>
+          <div id="app" dangerouslySetInnerHTML={{ __html: children }} style={this._getStyle()} />
+          <script dangerouslySetInnerHTML={{ __html: `window.App=${serialize(app)}` }} />
           {scripts.map(script => (
             <script key={script} src={script} />
           ))}
@@ -77,11 +80,7 @@ class Html extends React.Component {
             />
           )}
           {config.analytics.googleTrackingId && (
-            <script
-              src="https://www.google-analytics.com/analytics.js"
-              async
-              defer
-            />
+            <script src="https://www.google-analytics.com/analytics.js" async defer />
           )}
         </body>
       </html>
