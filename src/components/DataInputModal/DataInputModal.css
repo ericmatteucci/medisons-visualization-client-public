@@ -14,3 +14,21 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.contentPane {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.inputItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonPane {
+  display: flex;
+  padding: 10px;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
