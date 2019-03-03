@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *
@@ -16,7 +18,13 @@ import normalizeCss from 'normalize.css';
 import s from './Layout.css';
 import Header from '../Header';
 
-class Layout extends React.Component {
+type LayoutConnectedPropTypes = {
+  children: ?React.Element<*>,
+};
+
+type LayoutPropTypes = LayoutConnectedPropTypes;
+
+class Layout extends React.Component<LayoutPropTypes> {
   static propTypes = {
     children: PropTypes.node.isRequired, // eslint-disable-line react/no-unused-prop-types
   };

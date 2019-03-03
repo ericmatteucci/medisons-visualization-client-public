@@ -18,11 +18,11 @@ import { SignalNames, SIGNAL_LOAD_POLL_INTERVAL } from '../constants/ValueConsta
 import type { DispatchFunctionType } from '../actions/actionTypes/ActionTypes';
 import { updateSignalDataAction } from '../actions/SignalDataActions';
 
-type SignalDataLoadContainerBoundPropTypes = {
+type SignalDataLoadContainerConnectedPropTypes = {
   dispatch: DispatchFunctionType,
 };
 
-type SignalDataLoadContainerPropTypes = SignalDataLoadContainerBoundPropTypes;
+type SignalDataLoadContainerPropTypes = SignalDataLoadContainerConnectedPropTypes;
 
 class SignalDataLoadContainer extends React.Component<SignalDataLoadContainerPropTypes> {
   static propTypes = {
