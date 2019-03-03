@@ -1,0 +1,6 @@
+query ScoreDataQuery($name: String!) {
+  aggregatedScoreRows(name: $name) {
+    timestamp
+    value
+  }
+}

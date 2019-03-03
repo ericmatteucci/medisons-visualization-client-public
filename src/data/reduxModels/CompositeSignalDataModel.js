@@ -8,7 +8,6 @@ import SignalDataModel from './SignalDataModel';
  * calls to the DB and is not as suited for realtime updates.
  */
 export default class CompositeSignalDataModel {
-  derangementScore: SignalDataModel = new SignalDataModel();
   oxygenSaturation: SignalDataModel = new SignalDataModel();
   electrocardiogram: SignalDataModel = new SignalDataModel();
   bloodPressure: SignalDataModel = new SignalDataModel();

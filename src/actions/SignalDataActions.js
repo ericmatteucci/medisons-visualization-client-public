@@ -9,7 +9,6 @@ import type {
 } from '../data/reduxModels/SignalDataModel';
 
 // action.type identifiers for the chart actions
-export const UPDATE_DERANGEMENT_SCORE_CHART_ACTION = 'UPDATE_DERANGEMENT_SCORE_CHART_ACTION';
 export const UPDATE_SIGNAL_DATA_ACTION = 'UPDATE_SIGNAL_DATA_ACTION';
 
 // Chart data action types
@@ -28,19 +27,6 @@ export const updateSignalDataAction = (
   frequency: SignalFrequencyType,
 ): UpdateSignalDataActionType => ({
   type: UPDATE_SIGNAL_DATA_ACTION,
-  name,
-  data,
-  timestamp,
-  frequency,
-});
-
-export const updateDerangementScoreAction = (
-  name: SignalNameType,
-  data: SignalDataType,
-  timestamp: SignalTimestampType,
-  frequency: SignalFrequencyType,
-): UpdateSignalDataActionType => ({
-  type: UPDATE_DERANGEMENT_SCORE_CHART_ACTION,
   name,
   data,
   timestamp,
