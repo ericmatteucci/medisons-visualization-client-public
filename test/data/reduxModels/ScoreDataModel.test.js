@@ -10,15 +10,15 @@
 /* eslint-env jest */
 /* eslint-disable padded-blocks, no-unused-expressions */
 
-import { ScorePointModel, ScoreDataModel } from '../../../src/data/reduxModels/ScoreDataModel';
+import { ScoreList, ScoreDataModel } from '../../../src/data/reduxModels/ScoreDataModel';
 
 describe('ScoreDataModel', () => {
-  const score1 = new ScorePointModel(100, 1);
-  const score2 = new ScorePointModel(300, 1);
+  const score1 = new ScoreList(100, 1);
+  const score2 = new ScoreList(300, 1);
 
-  const score3 = new ScorePointModel(200, 5);
-  const score4 = new ScorePointModel(300, 5);
-  const score5 = new ScorePointModel(400, 5);
+  const score3 = new ScoreList(200, 5);
+  const score4 = new ScoreList(300, 5);
+  const score5 = new ScoreList(400, 5);
 
   test('should insert scores in order, replacing existing ones with updated ones', () => {
     const existingScores = [score1, score2];
