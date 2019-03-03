@@ -15,6 +15,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './Header.css';
 import DataInputModal from '../DataInputModal/DataInputModal';
+import BackgroundVariablesPane from '../BackgroundVariablesPane/BackgroundVariablesPane';
 
 type HeaderPropTypes = {};
 
@@ -27,6 +28,7 @@ class Header extends React.Component<HeaderPropTypes> {
             <h1 className={s.bannerTitle}>MediSons</h1>
             <p className={s.bannerDesc}>PhysioRange</p>
           </div>
+          <BackgroundVariablesPane />
           <DataInputModal />
         </div>
       </div>

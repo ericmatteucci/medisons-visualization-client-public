@@ -23,10 +23,13 @@ import {
   updateDataInputModalVisibleAction,
 } from '../../actions/DataInputModalActions';
 import type { DispatchFunctionType } from '../../actions/actionTypes/ActionTypes';
-import { DataInputModalDisplayNames } from '../../constants/DisplayConstants';
+import {
+  DataInputModalDisplayNames,
+  DataInputModalErrorMessages,
+} from '../../constants/DisplayConstants';
 
 // Value options for entering a sex parameter into the system
-const sexOptions = [{ value: 'M', label: 'M' }, { value: 'F', label: 'F' }];
+const sexOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
 
 type DataInputModalBoundPropTypes = {
   dataInputModalVisible: boolean,
@@ -41,6 +44,7 @@ type DataInputModalStateType = {
   weightInputState: string,
   heightInputState: string,
   selectedSexState: string,
+  errorMessage: string,
 };
 
 type DataInputModalPropTypes = DataInputModalBoundPropTypes & DataInputModalConnectedPropTypes;
@@ -65,6 +69,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
       heightInputState: '',
       weightInputState: '',
       selectedSexState: '',
+      errorMessage: '',
     };
   }
 
@@ -78,18 +83,34 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
       heightInputState: '',
       weightInputState: '',
       selectedSexState: '',
+      errorMessage: '',
     });
   };
   /**
    * Validate the values entered into the input boxes.
+   * If any of the values are invalid, set an error message.
    * @returns {boolean} Whether all values are valid or not.
    * @private
    */
-  _validateValues = (): boolean =>
-    Number(this.state.ageInputState) !== Number.NaN &&
-    Number(this.state.heightInputState) !== Number.NaN &&
-    Number(this.state.weightInputState) !== Number.NaN &&
-    this.state.selectedSexState !== '';
+  _validateValues = (): boolean => {
+    let ret = true;
+
+    if (!Number(this.state.ageInputState)) {
+      this.setState({ errorMessage: DataInputModalErrorMessages.AGE_ERROR });
+      ret = false;
+    } else if (!Number(this.state.heightInputState)) {
+      this.setState({ errorMessage: DataInputModalErrorMessages.HEIGHT_ERROR });
+      ret = false;
+    } else if (!Number(this.state.weightInputState)) {
+      this.setState({ errorMessage: DataInputModalErrorMessages.WEIGHT_ERROR });
+      ret = false;
+    } else if (this.state.selectedSexState === '') {
+      this.setState({ errorMessage: DataInputModalErrorMessages.SEX_ERROR });
+      ret = false;
+    }
+
+    return ret;
+  };
 
   /**
    * Handles a submit action. If all values are valid, dispatches an action to update the values.
@@ -106,8 +127,8 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
           this.state.selectedSexState,
         ),
       );
+      this._handleModalClose();
     }
-    this._clearValues();
   };
 
   /**
@@ -159,8 +180,8 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
    * @param selectedOption The currently selected sex option.
    * @private
    */
-  _handleSexInputChange = (selectedOption: string) => {
-    this.setState({ selectedSexState: selectedOption });
+  _handleSexInputChange = (selectedOption: Object) => {
+    this.setState({ selectedSexState: selectedOption.value });
   };
 
   render() {
@@ -168,10 +189,13 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
       <div className={s.main}>
         <PlusButton color="#FFFFFF" thickness={3} onClick={this._handleModalOpen} />
         <Modal open={this.props.dataInputModalVisible} onClose={this._handleModalClose} center>
-          <h2>{DataInputModalDisplayNames.TITLE}</h2>
+          <div className={s.headerPane}>
+            <div className={s.headerTitle}>{DataInputModalDisplayNames.TITLE}</div>
+            <div className={s.errorMessage}>{this.state.errorMessage}</div>
+          </div>
           <div className={s.contentPane}>
             <div className={s.inputItem}>
-              <p>Age:</p>
+              <div className={s.inputTitle}>{DataInputModalDisplayNames.AGE}</div>
               <input
                 type="text"
                 value={this.state.ageInputState}
@@ -179,7 +203,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               />
             </div>
             <div className={s.inputItem}>
-              <p>Height (cm):</p>
+              <div className={s.inputTitle}>{DataInputModalDisplayNames.HEIGHT}</div>
               <input
                 type="text"
                 value={this.state.heightInputState}
@@ -187,7 +211,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               />
             </div>
             <div className={s.inputItem}>
-              <p>Weight (kg):</p>
+              <div className={s.inputTitle}>{DataInputModalDisplayNames.WEIGHT}</div>
               <input
                 type="text"
                 value={this.state.weightInputState}
@@ -195,7 +219,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               />
             </div>
             <div className={s.inputItem}>
-              <p>Sex:</p>
+              <div className={s.inputTitle}>{DataInputModalDisplayNames.SEX}</div>
               <Select
                 value={this.state.selectedSexState}
                 options={sexOptions}

@@ -15,6 +15,23 @@
   justify-content: center;
 }
 
+.headerPane {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 0;
+}
+
+.headerTitle {
+  margin: 0;
+  font-weight: normal;
+  font-size: 25px;
+}
+
+.errorMessage {
+  min-height: 20px;
+  color: #f00;
+}
+
 .contentPane {
   display: flex;
   flex-direction: column;
@@ -24,6 +41,13 @@
 .inputItem {
   display: flex;
   flex-direction: column;
+  margin: 0 20px;
+}
+
+.errorMessage,
+.inputTitle {
+  font-size: 15px;
+  margin: 5px 0;
 }
 
 .buttonPane {
