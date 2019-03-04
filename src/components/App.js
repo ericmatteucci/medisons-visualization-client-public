@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
-import SignalDataLoadContainer from '../containers/signalDataLoadContainer';
+import SignalDataLoadContainer from '../containers/signalDataLoadContainer/signalDataLoadContainer';
 import MetaComponent from './MetaComponent/MetaComponent';
 
 const ContextType = {
@@ -72,6 +72,7 @@ class App extends React.PureComponent {
     position: 'fixed',
     top: '50%',
     left: '50%',
+    transform: 'translate(-50%, -50%)',
   });
 
   render() {

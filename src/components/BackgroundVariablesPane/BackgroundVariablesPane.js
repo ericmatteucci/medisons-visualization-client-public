@@ -15,7 +15,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './BackgroundVariablesPane.css';
-import { DataInputModalDisplayNames } from '../../constants/DisplayConstants';
+import { DataInputModalDisplayNames, EMPTY_VALUE_STRING } from '../../constants/DisplayConstants';
 
 type BackgroundVariablesPaneBoundPropTypes = {
   age: number,
@@ -45,23 +45,28 @@ class BackgroundVariablesPane extends React.Component<BackgroundVariablesPanePro
   });
 
   render() {
+    const displayAge = this.props.age === -1 ? EMPTY_VALUE_STRING : this.props.age;
+    const displayHeight = this.props.height === -1 ? EMPTY_VALUE_STRING : this.props.height;
+    const displayWeight = this.props.weight === -1 ? EMPTY_VALUE_STRING : this.props.weight;
+    const displaySex = this.props.sex === '' ? EMPTY_VALUE_STRING : this.props.sex;
+
     return (
       <div className={s.main}>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.AGE}</div>
-          <div className={s.itemValue}>{this.props.age}</div>
+          <div className={s.itemValue}>{displayAge}</div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.HEIGHT}</div>
-          <div className={s.itemValue}>{this.props.height}</div>
+          <div className={s.itemValue}>{displayHeight}</div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.WEIGHT}</div>
-          <div className={s.itemValue}>{this.props.weight}</div>
+          <div className={s.itemValue}>{displayWeight}</div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.SEX}</div>
-          <div className={s.itemValue}>{this.props.sex}</div>
+          <div className={s.itemValue}>{displaySex}</div>
         </div>
       </div>
     );
