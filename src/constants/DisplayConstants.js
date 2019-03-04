@@ -8,6 +8,8 @@ export const DataInputModalDisplayNames = {
   WEIGHT: 'Weight (kg)',
 };
 
+export const SELECT_SEX_HINT = 'Select...';
+
 export const DataInputModalErrorMessages = {
   AGE_ERROR: 'Please enter a valid age.',
   HEIGHT_ERROR: 'Please enter a valid height in cm.',

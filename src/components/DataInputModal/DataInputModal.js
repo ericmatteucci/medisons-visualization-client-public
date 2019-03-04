@@ -26,6 +26,7 @@ import type { DispatchFunctionType } from '../../actions/actionTypes/ActionTypes
 import {
   DataInputModalDisplayNames,
   DataInputModalErrorMessages,
+  SELECT_SEX_HINT,
 } from '../../constants/DisplayConstants';
 
 // Value options for entering a sex parameter into the system
@@ -68,7 +69,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
       ageInputState: '',
       heightInputState: '',
       weightInputState: '',
-      selectedSexState: '',
+      selectedSexState: SELECT_SEX_HINT,
       errorMessage: '',
     };
   }
@@ -82,7 +83,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
       ageInputState: '',
       heightInputState: '',
       weightInputState: '',
-      selectedSexState: '',
+      selectedSexState: SELECT_SEX_HINT,
       errorMessage: '',
     });
   };
@@ -95,16 +96,16 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   _validateValues = (): boolean => {
     let ret = true;
 
-    if (!Number(this.state.ageInputState)) {
+    if (!Number(this.state.ageInputState) || Number(this.state.ageInputState) < 0) {
       this.setState({ errorMessage: DataInputModalErrorMessages.AGE_ERROR });
       ret = false;
-    } else if (!Number(this.state.heightInputState)) {
+    } else if (!Number(this.state.heightInputState) || Number(this.state.heightInputState) <= 0) {
       this.setState({ errorMessage: DataInputModalErrorMessages.HEIGHT_ERROR });
       ret = false;
-    } else if (!Number(this.state.weightInputState)) {
+    } else if (!Number(this.state.weightInputState) || Number(this.state.weightInputState) <= 0) {
       this.setState({ errorMessage: DataInputModalErrorMessages.WEIGHT_ERROR });
       ret = false;
-    } else if (this.state.selectedSexState === '') {
+    } else if (this.state.selectedSexState === SELECT_SEX_HINT) {
       this.setState({ errorMessage: DataInputModalErrorMessages.SEX_ERROR });
       ret = false;
     }
@@ -153,7 +154,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
    * @param event The event that occurred.
    * @private
    */
-  _handleAgeInputChange = (event: SyntheticKeyboardEvent) => {
+  _handleAgeInputChange = (event: SyntheticKeyboardEvent<*>) => {
     this.setState({ ageInputState: event.target.value });
   };
 
@@ -162,7 +163,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
    * @param event The event that occurred.
    * @private
    */
-  _handleHeightInputChange = (event: SyntheticKeyboardEvent) => {
+  _handleHeightInputChange = (event: SyntheticKeyboardEvent<*>) => {
     this.setState({ heightInputState: event.target.value });
   };
 
@@ -171,7 +172,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
    * @param event The event that occurred.
    * @private
    */
-  _handleWeightInputChange = (event: SyntheticKeyboardEvent) => {
+  _handleWeightInputChange = (event: SyntheticKeyboardEvent<*>) => {
     this.setState({ weightInputState: event.target.value });
   };
 
@@ -223,7 +224,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               <Select
                 value={this.state.selectedSexState}
                 options={sexOptions}
-                placeholder="Select..."
+                placeholder={this.state.selectedSexState}
                 onChange={this._handleSexInputChange}
               />
             </div>
@@ -243,6 +244,9 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
     );
   }
 }
+
+// For testing
+export const UnconnectedDataInputModal = DataInputModal;
 
 const ConnectedDataInputModal = connect(DataInputModal.mapStateToProps)(DataInputModal);
 
