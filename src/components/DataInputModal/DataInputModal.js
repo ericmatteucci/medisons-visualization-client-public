@@ -26,7 +26,6 @@ import type { DispatchFunctionType } from '../../actions/actionTypes/ActionTypes
 import {
   DataInputModalDisplayNames,
   DataInputModalErrorMessages,
-  SELECT_SEX_HINT,
 } from '../../constants/DisplayConstants';
 
 // Value options for entering a sex parameter into the system
@@ -34,6 +33,10 @@ const sexOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female'
 
 type DataInputModalBoundPropTypes = {
   dataInputModalVisible: boolean,
+  age: number,
+  height: number,
+  weight: number,
+  sex: string,
 };
 
 type DataInputModalConnectedPropTypes = {
@@ -57,19 +60,27 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     dataInputModalVisible: PropTypes.bool.isRequired,
+    age: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    weight: PropTypes.number.isRequired,
+    sex: PropTypes.string.isRequired,
   };
 
   static mapStateToProps = (state: any): DataInputModalBoundPropTypes => ({
     dataInputModalVisible: state.dataInputReducer.visible,
+    age: state.backgroundVariablesReducer.age,
+    height: state.backgroundVariablesReducer.height,
+    weight: state.backgroundVariablesReducer.weight,
+    sex: state.backgroundVariablesReducer.sex,
   });
 
   constructor(props: DataInputModalPropTypes) {
     super(props);
     this.state = {
-      ageInputState: '',
-      heightInputState: '',
-      weightInputState: '',
-      selectedSexState: SELECT_SEX_HINT,
+      ageInputState: this.props.age.toString(),
+      heightInputState: this.props.height.toString(),
+      weightInputState: this.props.weight.toString(),
+      selectedSexState: this.props.sex,
       errorMessage: '',
     };
   }
@@ -80,10 +91,10 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
    */
   _clearValues = () => {
     this.setState({
-      ageInputState: '',
-      heightInputState: '',
-      weightInputState: '',
-      selectedSexState: SELECT_SEX_HINT,
+      ageInputState: this.props.age.toString(),
+      heightInputState: this.props.height.toString(),
+      weightInputState: this.props.weight.toString(),
+      selectedSexState: this.props.sex,
       errorMessage: '',
     });
   };
@@ -96,17 +107,23 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   _validateValues = (): boolean => {
     let ret = true;
 
-    if (!Number(this.state.ageInputState) || Number(this.state.ageInputState) < 0) {
+    if (
+      this.state.ageInputState !== '' &&
+      (!Number(this.state.ageInputState) || Number(this.state.ageInputState) < 0)
+    ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.AGE_ERROR });
       ret = false;
-    } else if (!Number(this.state.heightInputState) || Number(this.state.heightInputState) <= 0) {
+    } else if (
+      this.state.heightInputState !== '' &&
+      (!Number(this.state.heightInputState) || Number(this.state.heightInputState) <= 0)
+    ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.HEIGHT_ERROR });
       ret = false;
-    } else if (!Number(this.state.weightInputState) || Number(this.state.weightInputState) <= 0) {
+    } else if (
+      this.state.weightInputState !== '' &&
+      (!Number(this.state.weightInputState) || Number(this.state.weightInputState) <= 0)
+    ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.WEIGHT_ERROR });
-      ret = false;
-    } else if (this.state.selectedSexState === SELECT_SEX_HINT) {
-      this.setState({ errorMessage: DataInputModalErrorMessages.SEX_ERROR });
       ret = false;
     }
 
@@ -137,6 +154,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
    * @private
    */
   _handleModalOpen = () => {
+    this._clearValues();
     this.props.dispatch(updateDataInputModalVisibleAction(true));
   };
 
@@ -145,7 +163,6 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
    * @private
    */
   _handleModalClose = () => {
-    this._clearValues();
     this.props.dispatch(updateDataInputModalVisibleAction(false));
   };
 

@@ -15,7 +15,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './BackgroundVariablesPane.css';
-import { DataInputModalDisplayNames, EMPTY_VALUE_STRING } from '../../constants/DisplayConstants';
+import {
+  DataInputModalDisplayNames,
+  EMPTY_VALUE_STRING,
+  SELECT_SEX_HINT,
+} from '../../constants/DisplayConstants';
 
 type BackgroundVariablesPaneBoundPropTypes = {
   age: number,
@@ -45,10 +49,12 @@ class BackgroundVariablesPane extends React.Component<BackgroundVariablesPanePro
   });
 
   render() {
-    const displayAge = this.props.age === -1 ? EMPTY_VALUE_STRING : this.props.age;
-    const displayHeight = this.props.height === -1 ? EMPTY_VALUE_STRING : this.props.height;
-    const displayWeight = this.props.weight === -1 ? EMPTY_VALUE_STRING : this.props.weight;
-    const displaySex = this.props.sex === '' ? EMPTY_VALUE_STRING : this.props.sex;
+    const displaySex = this.props.sex === SELECT_SEX_HINT ? EMPTY_VALUE_STRING : this.props.sex;
+    const displayAge = this.props.age === -1 ? EMPTY_VALUE_STRING : this.props.age.toFixed(0);
+    const displayHeight =
+      this.props.height === -1 ? EMPTY_VALUE_STRING : this.props.height.toFixed(0);
+    const displayWeight =
+      this.props.weight === -1 ? EMPTY_VALUE_STRING : this.props.weight.toFixed(0);
 
     return (
       <div className={s.main}>
