@@ -2,16 +2,16 @@
 
 import ScoreDataModel from '../data/reduxModels/ScoreDataModel';
 import { UPDATE_SCORE_DATA_ACTION } from '../actions/ScoreDataActions';
-import type { UpdateScoresActionType } from '../actions/ScoreDataActions';
+import type { UpdateScoreDataActionType } from '../actions/ScoreDataActions';
 import newState from '../lib/NewState';
 
 const scoreDataReducer = (
   state: ScoreDataModel = new ScoreDataModel(),
-  action: UpdateScoresActionType,
+  action: UpdateScoreDataActionType,
 ): ScoreDataModel => {
   if (action.type === UPDATE_SCORE_DATA_ACTION) {
     return newState(state, {
-      timestamps: action.timestamps,
+      timestamp: action.timestamp,
       bloodPressure: action.bloodPressure,
       derangement: action.derangement,
       electrocardiogram: action.electrocardiogram,

@@ -16,7 +16,7 @@ import { PacmanLoader } from 'react-spinners';
 import MultiSignalDataQuery from './queries/MultiSignalData.graphql';
 import { SignalNames, SIGNAL_LOAD_POLL_INTERVAL } from '../constants/ValueConstants';
 import type { DispatchFunctionType } from '../actions/actionTypes/ActionTypes';
-import { updateSignalDataAction } from '../actions/SignalDataActions';
+import { updateScoreDataAction } from '../actions/ScoreDataActions';
 
 type SignalDataLoadContainerBoundPropTypes = {
   dispatch: DispatchFunctionType,
@@ -48,7 +48,7 @@ class SignalDataLoadContainer extends React.Component<SignalDataLoadContainerPro
                 const timestamp = new Date(signalData[i].timestamp).getTime();
 
                 this.props.dispatch(
-                  updateSignalDataAction(
+                  updateScoreDataAction(
                     signalData[i].name,
                     signalData[i].dataPoints,
                     timestamp,

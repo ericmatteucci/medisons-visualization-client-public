@@ -1,12 +1,12 @@
 // @flow
 
 import type { ActionType } from './actionTypes/ActionTypes';
-import type { ScoreTimestampsType, ScoreValueListType } from '../data/reduxModels/ScoreDataModel';
+import type { ScoreTimestampType, ScoreValueListType } from '../data/reduxModels/ScoreDataModel';
 
 export const UPDATE_SCORE_DATA_ACTION = 'UPDATE_SCORE_DATA_ACTION';
 
-export type UpdateScoresActionType = {
-  timestamps: ScoreTimestampsType,
+export type UpdateScoreDataActionType = {
+  timestamp: ScoreTimestampType,
   bloodPressure: ScoreValueListType,
   derangement: ScoreValueListType,
   electrocardiogram: ScoreValueListType,
@@ -15,17 +15,17 @@ export type UpdateScoresActionType = {
   temperature: ScoreValueListType,
 } & ActionType;
 
-export const updateScoresAction = (
-  timestamps: ScoreTimestampsType,
+export const updateScoreDataAction = (
+  timestamp: ScoreTimestampType,
   bloodPressure: ScoreValueListType,
   derangement: ScoreValueListType,
   electrocardiogram: ScoreValueListType,
   oxygenSaturation: ScoreValueListType,
   respiratoryRate: ScoreValueListType,
   temperature: ScoreValueListType,
-): UpdateScoresActionType => ({
+): UpdateScoreDataActionType => ({
   type: UPDATE_SCORE_DATA_ACTION,
-  timestamps,
+  timestamp,
   bloodPressure,
   derangement,
   electrocardiogram,

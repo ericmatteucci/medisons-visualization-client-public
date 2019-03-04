@@ -1,13 +1,13 @@
 // @flow
 
-export type ScoreTimestampsType = Array<number>;
+export type ScoreTimestampType = Array<number>;
 export type ScoreValueListType = Array<number>;
 
 /**
  * Model to aggregate score points over time.
  */
 export default class ScoreDataModel {
-  timestamps: ScoreTimestampsType = [];
+  timestamp: ScoreTimestampType = [];
   bloodPressure: ScoreValueListType = [];
   derangement: ScoreValueListType = [];
   electrocardiogram: ScoreValueListType = [];
