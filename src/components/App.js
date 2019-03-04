@@ -64,10 +64,8 @@ class App extends React.PureComponent {
   }
 
   _getStyle = () => ({
-    width: '100%',
-    height: '100%',
-    minHeight: '100%',
-    minWidth: '100%',
+    width: 'inherit',
+    height: 'inherit',
   });
 
   _getContainerStyle = () => ({

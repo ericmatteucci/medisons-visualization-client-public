@@ -40,11 +40,6 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
     chartData: derangementScoreChartWindowSelector(state),
   });
 
-  chartStyle = () => ({
-    height: '100%',
-    width: '100%',
-  });
-
   render() {
     return (
       <div className={s.main}>
@@ -53,7 +48,6 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
           title={MAIN_CHART_DISPLAY_NAME}
           chartData={this.props.chartData}
           overrideStyles={s.chart}
-          overrideChartStyle={this.chartStyle}
         />
       </div>
     );
