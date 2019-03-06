@@ -21,6 +21,14 @@ import {
   SELECT_SEX_HINT,
 } from '../../constants/DisplayConstants';
 
+// Sub-component names used for testing
+export const BackgroundVariablesPaneComponentNames = {
+  AGE_DISPLAY_BOX: 'BVP_AGE_DISPLAY_BOX',
+  HEIGHT_DISPLAY_BOX: 'BVP_HEIGHT_DISPLAY_BOX',
+  WEIGHT_DISPLAY_BOX: 'BVP_WEIGHT_DISPLAY_BOX',
+  SEX_DISPLAY_BOX: 'BVP_SEX_DISPLAY_BOX',
+};
+
 type BackgroundVariablesPaneBoundPropTypes = {
   age: number,
   height: number,
@@ -60,24 +68,41 @@ class BackgroundVariablesPane extends React.Component<BackgroundVariablesPanePro
       <div className={s.main}>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.AGE}</div>
-          <div className={s.itemValue}>{displayAge}</div>
+          <div id={BackgroundVariablesPaneComponentNames.AGE_DISPLAY_BOX} className={s.itemValue}>
+            {displayAge}
+          </div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.HEIGHT}</div>
-          <div className={s.itemValue}>{displayHeight}</div>
+          <div
+            id={BackgroundVariablesPaneComponentNames.HEIGHT_DISPLAY_BOX}
+            className={s.itemValue}
+          >
+            {displayHeight}
+          </div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.WEIGHT}</div>
-          <div className={s.itemValue}>{displayWeight}</div>
+          <div
+            id={BackgroundVariablesPaneComponentNames.WEIGHT_DISPLAY_BOX}
+            className={s.itemValue}
+          >
+            {displayWeight}
+          </div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.SEX}</div>
-          <div className={s.itemValue}>{displaySex}</div>
+          <div id={BackgroundVariablesPaneComponentNames.SEX_DISPLAY_BOX} className={s.itemValue}>
+            {displaySex}
+          </div>
         </div>
       </div>
     );
   }
 }
+
+// Unconnected component for testing purposes
+export const UnconnectedBackgroundVariablesPane = BackgroundVariablesPane;
 
 const ConnectedBackgroundVariablesPane = connect(BackgroundVariablesPane.mapStateToProps)(
   BackgroundVariablesPane,

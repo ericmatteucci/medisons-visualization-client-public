@@ -31,6 +31,17 @@ import {
 // Value options for entering a sex parameter into the system
 const sexOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
 
+// Sub-component names used for testing
+export const DataInputModalComponentNames = {
+  AGE_INPUT_BOX: 'DIM_AGE_INPUT_BOX',
+  HEIGHT_INPUT_BOX: 'DIM_HEIGHT_INPUT_BOX',
+  WEIGHT_INPUT_BOX: 'DIM_WEIGHT_INPUT_BOX',
+  SEX_INPUT_SELECT: 'DIM_SEX_INPUT_SELECT',
+  SUBMIT_BUTTON: 'DIM_SUBMIT_BUTTON',
+  CANCEL_BUTTON: 'DIM_CANCEL_BUTTON',
+  OPEN_BUTTON: 'DIM_OPEN_BUTTON',
+};
+
 type DataInputModalBoundPropTypes = {
   dataInputModalVisible: boolean,
   age: number,
@@ -205,7 +216,12 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   render() {
     return (
       <div className={s.main}>
-        <PlusButton color="#FFFFFF" thickness={3} onClick={this._handleModalOpen} />
+        <PlusButton
+          id={DataInputModalComponentNames.OPEN_BUTTON}
+          color="#FFFFFF"
+          thickness={3}
+          onClick={this._handleModalOpen}
+        />
         <Modal open={this.props.dataInputModalVisible} onClose={this._handleModalClose} center>
           <div className={s.headerPane}>
             <div className={s.headerTitle}>{DataInputModalDisplayNames.TITLE}</div>
@@ -215,6 +231,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
             <div className={s.inputItem}>
               <div className={s.inputTitle}>{DataInputModalDisplayNames.AGE}</div>
               <input
+                id={DataInputModalComponentNames.AGE_INPUT_BOX}
                 type="text"
                 value={this.state.ageInputState}
                 onChange={this._handleAgeInputChange}
@@ -223,6 +240,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
             <div className={s.inputItem}>
               <div className={s.inputTitle}>{DataInputModalDisplayNames.HEIGHT}</div>
               <input
+                id={DataInputModalComponentNames.HEIGHT_INPUT_BOX}
                 type="text"
                 value={this.state.heightInputState}
                 onChange={this._handleHeightInputChange}
@@ -231,6 +249,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
             <div className={s.inputItem}>
               <div className={s.inputTitle}>{DataInputModalDisplayNames.WEIGHT}</div>
               <input
+                id={DataInputModalComponentNames.WEIGHT_INPUT_BOX}
                 type="text"
                 value={this.state.weightInputState}
                 onChange={this._handleWeightInputChange}
@@ -239,6 +258,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
             <div className={s.inputItem}>
               <div className={s.inputTitle}>{DataInputModalDisplayNames.SEX}</div>
               <Select
+                id={DataInputModalComponentNames.SEX_INPUT_SELECT}
                 value={this.state.selectedSexState}
                 options={sexOptions}
                 placeholder={this.state.selectedSexState}
@@ -247,8 +267,14 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
             </div>
           </div>
           <div className={s.buttonPane}>
-            <CloseButton color="#FF0000" thickness={3} onClick={this._handleModalClose} />
+            <CloseButton
+              id={DataInputModalComponentNames.CANCEL_BUTTON}
+              color="#FF0000"
+              thickness={3}
+              onClick={this._handleModalClose}
+            />
             <HoverMorphIcon
+              id={DataInputModalComponentNames.SUBMIT_BUTTON}
               baseType="check"
               hoverType="arrowRight"
               color="#458B00"
