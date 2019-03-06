@@ -97,7 +97,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   }
 
   /**
-   * Clears the current state values.
+   * Clears the current state values by resetting them to the values of the props.
    * @private
    */
   _clearValues = () => {

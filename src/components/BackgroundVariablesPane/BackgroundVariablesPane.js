@@ -39,7 +39,7 @@ type BackgroundVariablesPaneBoundPropTypes = {
 type BackgroundVariablesPanePropTypes = BackgroundVariablesPaneBoundPropTypes;
 
 /**
- * Modal to allow for data input into the system.
+ * Pane to show the current background variables being used in the system.
  */
 class BackgroundVariablesPane extends React.Component<BackgroundVariablesPanePropTypes> {
   static propTypes = {
