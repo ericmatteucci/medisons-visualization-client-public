@@ -23,7 +23,7 @@ class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDat
       <div>
         <Query query={BackgroundDataQuery}>
           {({ data }) => {
-            if (data.backgroundData) {
+            if (data && data.backgroundData) {
               this.props.dispatch(
                 updateBackgroundDataAction(
                   data.backgroundData.age,
