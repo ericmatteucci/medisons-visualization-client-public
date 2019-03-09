@@ -16,6 +16,11 @@ import {
   DataInputModalDisplayNames,
   DataInputModalErrorMessages,
 } from '../../constants/DisplayConstants';
+import {
+  AGE_DEFAULT_VALUE,
+  HEIGHT_DEFAULT_VALUE,
+  WEIGHT_DEFAULT_VALUE,
+} from '../../constants/ValueConstants';
 
 // Value options for entering a sex parameter into the system
 const sexOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
@@ -203,6 +208,17 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   };
 
   render() {
+    const displayAge =
+      this.state.ageInputState === AGE_DEFAULT_VALUE.toString() ? '' : this.state.ageInputState;
+    const displayHeight =
+      this.state.heightInputState === HEIGHT_DEFAULT_VALUE.toString()
+        ? ''
+        : this.state.heightInputState;
+    const displayWeight =
+      this.state.weightInputState === WEIGHT_DEFAULT_VALUE.toString()
+        ? ''
+        : this.state.weightInputState;
+
     return (
       <div className={s.main}>
         <PlusButton
@@ -222,7 +238,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               <input
                 id={DataInputModalComponentNames.AGE_INPUT_BOX}
                 type="text"
-                value={this.state.ageInputState}
+                value={displayAge}
                 onChange={this._handleAgeInputChange}
               />
             </div>
@@ -231,7 +247,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               <input
                 id={DataInputModalComponentNames.HEIGHT_INPUT_BOX}
                 type="text"
-                value={this.state.heightInputState}
+                value={displayHeight}
                 onChange={this._handleHeightInputChange}
               />
             </div>
@@ -240,7 +256,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               <input
                 id={DataInputModalComponentNames.WEIGHT_INPUT_BOX}
                 type="text"
-                value={this.state.weightInputState}
+                value={displayWeight}
                 onChange={this._handleWeightInputChange}
               />
             </div>
