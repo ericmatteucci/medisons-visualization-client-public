@@ -1,13 +1,4 @@
 // @flow
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,10 +9,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './DataInputModal.css';
-import {
-  updateBackgroundVariablesAction,
-  updateDataInputModalVisibleAction,
-} from '../../actions/DataInputModalActions';
+import { updateDataInputModalVisibleAction } from '../../actions/DataInputModalActions';
+import { updateBackgroundDataAction } from '../../actions/BackgroundDataActions';
 import type { DispatchFunctionType } from '../../actions/actionTypes/ActionTypes';
 import {
   DataInputModalDisplayNames,
@@ -79,10 +68,10 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
 
   static mapStateToProps = (state: any): DataInputModalBoundPropTypes => ({
     dataInputModalVisible: state.dataInputReducer.visible,
-    age: state.backgroundVariablesReducer.age,
-    height: state.backgroundVariablesReducer.height,
-    weight: state.backgroundVariablesReducer.weight,
-    sex: state.backgroundVariablesReducer.sex,
+    age: state.backgroundDataReducer.age,
+    height: state.backgroundDataReducer.height,
+    weight: state.backgroundDataReducer.weight,
+    sex: state.backgroundDataReducer.sex,
   });
 
   constructor(props: DataInputModalPropTypes) {
@@ -149,7 +138,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   _handleSubmit = () => {
     if (this._validateValues()) {
       this.props.dispatch(
-        updateBackgroundVariablesAction(
+        updateBackgroundDataAction(
           Number(this.state.ageInputState),
           Number(this.state.heightInputState),
           Number(this.state.weightInputState),

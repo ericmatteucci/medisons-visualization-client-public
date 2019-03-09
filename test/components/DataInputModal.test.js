@@ -8,10 +8,8 @@ import {
   UnconnectedDataInputModal,
 } from '../../src/components/DataInputModal/DataInputModal';
 import { DataInputModalErrorMessages } from '../../src/constants/DisplayConstants';
-import {
-  updateBackgroundVariablesAction,
-  updateDataInputModalVisibleAction,
-} from '../../src/actions/DataInputModalActions';
+import { updateDataInputModalVisibleAction } from '../../src/actions/DataInputModalActions';
+import { updateBackgroundDataAction } from '../../src/actions/BackgroundDataActions';
 
 describe('DataInputModal', () => {
   const testAge = 55;
@@ -93,7 +91,7 @@ describe('DataInputModal', () => {
   });
 
   test(
-    'Should dispatch actions to update background variables and close the modal when ' +
+    'Should dispatch actions to update background data and close the modal when ' +
       'submit is clicked and valid data is stored in the component state.',
     () => {
       const wrapper = getWrappedComponent();
@@ -125,12 +123,7 @@ describe('DataInputModal', () => {
 
       expect(dispatch.mock.calls.length).toEqual(2);
       expect(dispatch.mock.calls[0][0]).toEqual(
-        updateBackgroundVariablesAction(
-          Number(newAge),
-          Number(newHeight),
-          Number(newWeight),
-          newSex,
-        ),
+        updateBackgroundDataAction(Number(newAge), Number(newHeight), Number(newWeight), newSex),
       );
       expect(dispatch.mock.calls[1][0]).toEqual(updateDataInputModalVisibleAction(false));
     },

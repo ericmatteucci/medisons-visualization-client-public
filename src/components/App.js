@@ -13,6 +13,8 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
 import SignalDataLoadContainer from '../containers/signalDataLoadContainer/signalDataLoadContainer';
 import MetaComponent from './MetaComponent/MetaComponent';
+import BackgroundDataStoreContainer from '../containers/backgroundDataStoreContainer/backgroundDataStoreContainer';
+import BackgroundDataLoadContainer from '../containers/backgroundDataLoadContainer/backgroundDataLoadContainer';
 
 const ContextType = {
   // Enables critical path CSS rendering
@@ -86,6 +88,8 @@ class App extends React.PureComponent {
         <div style={this._getContainerStyle()}>
           <SignalDataLoadContainer />
         </div>
+        <BackgroundDataStoreContainer />
+        <BackgroundDataLoadContainer />
         <MetaComponent />
       </div>
     );

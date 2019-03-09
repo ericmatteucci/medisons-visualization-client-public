@@ -1,0 +1,8 @@
+mutation StoreBackgroundDataMutation($age: Int, $height: Int, $weight: Int, $sex: String) {
+  storeBackgroundData(age: $age, height: $height, weight: $weight, sex: $sex) {
+    age
+    height
+    weight
+    sex
+  }
+}
