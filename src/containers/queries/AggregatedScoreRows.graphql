@@ -1,0 +1,11 @@
+query AggregatedDataQuery($from: Int, $to: Int) {
+  aggregatedScoreRows(from: $from, to: $to) {
+    timestamp
+    value
+    spo2
+    ecg
+    bp
+    resp
+    temp
+  }
+}

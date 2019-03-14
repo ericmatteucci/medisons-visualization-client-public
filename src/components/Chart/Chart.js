@@ -20,7 +20,6 @@ import TimeUtilities from '../../lib/TimeUtilities';
 
 type ChartInjectedPropTypes = {
   type: string,
-  title: string,
   chartData: ChartDataModel,
   overrideStyles: ?string,
   overrideChartStyle: ?Function,
@@ -31,7 +30,6 @@ type ChartPropTypes = ChartInjectedPropTypes;
 class Chart extends React.Component<ChartPropTypes> {
   static propTypes = {
     type: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
     chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
     overrideStyles: PropTypes.string,
     overrideChartStyle: PropTypes.func,
@@ -48,7 +46,7 @@ class Chart extends React.Component<ChartPropTypes> {
    */
   _getChartOptions = (): Object => ({
     title: {
-      text: this.props.title,
+      text: this.props.chartData.getName(),
     },
     tooltip: {},
     xAxis: {

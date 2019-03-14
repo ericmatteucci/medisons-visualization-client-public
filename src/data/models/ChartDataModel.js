@@ -15,7 +15,7 @@ export default class ChartDataModel {
   data: SignalDataType = [];
   domainValues: SignalDomainValuesType = [];
 
-  constructor(name: SignalNameType, data: SignalDataType, domainValues: SignalDomainValuesType) {
+  constructor(name: SignalNameType, domainValues: SignalDomainValuesType, data: SignalDataType) {
     this.name = name;
     this.data = data;
     this.domainValues = domainValues;
