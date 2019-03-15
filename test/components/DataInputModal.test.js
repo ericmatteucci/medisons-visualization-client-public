@@ -10,6 +10,7 @@ import {
 import { DataInputModalErrorMessages } from '../../src/constants/DisplayConstants';
 import { updateDataInputModalVisibleAction } from '../../src/actions/DataInputModalActions';
 import { updateBackgroundDataAction } from '../../src/actions/BackgroundDataActions';
+import { SEX_DEFAULT_VALUE } from '../../src/constants/ValueConstants';
 
 describe('DataInputModal', () => {
   const testAge = 55;
@@ -132,19 +133,13 @@ describe('DataInputModal', () => {
   test('Should set the correct error message if an invalid age is entered.', () => {
     const wrapper = getWrappedComponent();
 
-    expect(wrapper.instance().state.ageInputState).toEqual(testAge.toString());
-
-    const invalidAge = '-22';
-
     wrapper
-      .find(`#${DataInputModalComponentNames.AGE_INPUT_BOX}`)
-      .simulate(SyntheticEvents.CHANGE, { target: { value: invalidAge } });
-
-    expect(wrapper.instance().state.ageInputState).toEqual(invalidAge);
+      .find(`#${DataInputModalComponentNames.SEX_INPUT_SELECT}`)
+      .simulate(SyntheticEvents.CHANGE, { value: SEX_DEFAULT_VALUE });
 
     wrapper.find(`#${DataInputModalComponentNames.SUBMIT_BUTTON}`).simulate(SyntheticEvents.CLICK);
 
-    expect(wrapper.instance().state.errorMessage).toEqual(DataInputModalErrorMessages.AGE_ERROR);
+    expect(wrapper.instance().state.errorMessage).toEqual(DataInputModalErrorMessages.SEX_ERROR);
   });
 
   test('Should set the correct error message if an invalid age is entered.', () => {
@@ -166,6 +161,24 @@ describe('DataInputModal', () => {
   });
 
   test('Should set the correct error message if an invalid weight is entered.', () => {
+    const wrapper = getWrappedComponent();
+
+    expect(wrapper.instance().state.weightInputState).toEqual(testWeight.toString());
+
+    const invalidWeight = 'SOMEONE LOVE ME PLS';
+
+    wrapper
+      .find(`#${DataInputModalComponentNames.WEIGHT_INPUT_BOX}`)
+      .simulate(SyntheticEvents.CHANGE, { target: { value: invalidWeight } });
+
+    expect(wrapper.instance().state.weightInputState).toEqual(invalidWeight);
+
+    wrapper.find(`#${DataInputModalComponentNames.SUBMIT_BUTTON}`).simulate(SyntheticEvents.CLICK);
+
+    expect(wrapper.instance().state.errorMessage).toEqual(DataInputModalErrorMessages.WEIGHT_ERROR);
+  });
+
+  test('Should set the correct error message if an invalid sex is entered.', () => {
     const wrapper = getWrappedComponent();
 
     expect(wrapper.instance().state.weightInputState).toEqual(testWeight.toString());

@@ -20,6 +20,7 @@ import {
   AGE_DEFAULT_VALUE,
   HEIGHT_DEFAULT_VALUE,
   WEIGHT_DEFAULT_VALUE,
+  SEX_DEFAULT_VALUE,
 } from '../../constants/ValueConstants';
 
 // Value options for entering a sex parameter into the system
@@ -114,7 +115,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
 
     if (
       this.state.ageInputState !== '' &&
-      (!Number(this.state.ageInputState) || Number(this.state.ageInputState) < 0)
+      (!Number(this.state.ageInputState) || Number(this.state.ageInputState) <= 0)
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.AGE_ERROR });
       ret = false;
@@ -129,6 +130,9 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
       (!Number(this.state.weightInputState) || Number(this.state.weightInputState) <= 0)
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.WEIGHT_ERROR });
+      ret = false;
+    } else if (this.state.selectedSexState === SEX_DEFAULT_VALUE) {
+      this.setState({ errorMessage: DataInputModalErrorMessages.SEX_ERROR });
       ret = false;
     }
 
