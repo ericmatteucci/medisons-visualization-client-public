@@ -32,12 +32,12 @@ class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDat
   constructor(props: BackgroundDataLoadContainerPropTypes) {
     super(props);
 
-    this._updateTimer = setInterval(this.fetchBackgroundData, this._exponentialRetries * 1000);
+    this.fetchBackgroundData();
   }
 
   componentWillUnmount() {
     if (this._updateTimer) {
-      clearInterval(this._updateTimer);
+      clearTimeout(this._updateTimer);
       this._updateTimer = null;
     }
   }
@@ -54,7 +54,7 @@ class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDat
    * @type {number}
    * @private
    */
-  _exponentialRetries: number = 0.25;
+  _exponentialRetries: number = 0.5;
 
   /**
    * This is invoked to retrieve background data from the DB.
@@ -74,16 +74,21 @@ class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDat
             this.props.dispatch(updateBackgroundDataAction(age, height, weight, sex));
 
             if (this._updateTimer) {
-              clearInterval(this._updateTimer);
+              clearTimeout(this._updateTimer);
               this._updateTimer = null;
+              this._exponentialRetries = 0;
             }
+          } else if (this._exponentialRetries < 200) {
+            this._exponentialRetries *= 2;
+            this._updateTimer = setTimeout(
+              this.fetchBackgroundData,
+              this._exponentialRetries * 1000,
+            );
           }
         })
         .catch(err => {
           throw err;
         });
-
-    this._exponentialRetries *= 2;
 
     generateAsyncAction(promise);
   };
