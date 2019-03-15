@@ -25,6 +25,7 @@ class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDat
     dispatch: PropTypes.func.isRequired,
     client: PropTypes.shape({
       query: PropTypes.func.isRequired,
+      mutate: PropTypes.func.isRequired,
     }).isRequired,
   };
 

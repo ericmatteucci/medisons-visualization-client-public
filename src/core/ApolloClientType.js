@@ -2,5 +2,5 @@
 
 export type ApolloClientType = {
   query: Function,
-  mutation: Function,
+  mutate: Function,
 };
