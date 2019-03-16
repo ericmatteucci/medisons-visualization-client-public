@@ -88,8 +88,8 @@ class App extends React.PureComponent {
         <div style={this._getContainerStyle()}>
           <SignalDataLoadContainer />
         </div>
-        <BackgroundDataStoreContainer />
-        <BackgroundDataLoadContainer />
+        <BackgroundDataStoreContainer client={client} />
+        <BackgroundDataLoadContainer client={client} />
         <MetaComponent />
       </div>
     );

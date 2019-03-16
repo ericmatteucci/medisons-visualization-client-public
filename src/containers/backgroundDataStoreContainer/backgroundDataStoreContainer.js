@@ -2,14 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Mutation } from 'react-apollo';
 import StoreBackgroundDataMutation from '../mutations/StoreBackgroundData.graphql';
+import type { ApolloClientType } from '../../core/ApolloClientType';
 import {
   AGE_DEFAULT_VALUE,
   HEIGHT_DEFAULT_VALUE,
   WEIGHT_DEFAULT_VALUE,
   SEX_DEFAULT_VALUE,
 } from '../../constants/ValueConstants';
+import generateAsyncAction from '../../actions/AsyncActionGenerator';
 
 type BackgroundDataStoreContainerBoundPropTypes = {
   age: number,
@@ -18,7 +19,12 @@ type BackgroundDataStoreContainerBoundPropTypes = {
   sex: string,
 };
 
-type BackgroundDataStoreContainerPropTypes = BackgroundDataStoreContainerBoundPropTypes;
+type BackgroundDataStoreContainerInjectedPropTypes = {
+  client: ApolloClientType,
+};
+
+type BackgroundDataStoreContainerPropTypes = BackgroundDataStoreContainerBoundPropTypes &
+  BackgroundDataStoreContainerInjectedPropTypes;
 
 class BackgroundDataStoreContainerComponent extends React.Component<BackgroundDataStoreContainerPropTypes> {
   static propTypes = {
@@ -26,6 +32,10 @@ class BackgroundDataStoreContainerComponent extends React.Component<BackgroundDa
     height: PropTypes.number.isRequired,
     weight: PropTypes.number.isRequired,
     sex: PropTypes.string.isRequired,
+    client: PropTypes.shape({
+      query: PropTypes.func.isRequired,
+      mutate: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   static mapStateToProps = (state: any): BackgroundDataStoreContainerBoundPropTypes => ({
@@ -57,44 +67,35 @@ class BackgroundDataStoreContainerComponent extends React.Component<BackgroundDa
     return noDefaultValues && atLeastOneValueChanged;
   }
 
+  componentDidUpdate() {
+    this.storeBackgroundData();
+  }
+
   /**
-   * Check that the current props are valid for storing in the DB.
-   * @returns {boolean} Whether the values are valid or not.
-   * @private
+   * Generate an async function to store new background data in the DB.
    */
-  _validateValues = (): boolean =>
-    this.props.age !== null &&
-    this.props.height !== null &&
-    this.props.weight !== null &&
-    this.props.sex !== null &&
-    this.props.age !== undefined &&
-    this.props.height !== undefined &&
-    this.props.weight !== undefined &&
-    this.props.sex !== undefined &&
-    this.props.age !== AGE_DEFAULT_VALUE &&
-    this.props.height !== HEIGHT_DEFAULT_VALUE &&
-    this.props.weight !== WEIGHT_DEFAULT_VALUE &&
-    this.props.sex !== SEX_DEFAULT_VALUE;
+  storeBackgroundData = () => {
+    const promise = () =>
+      this.props.client
+        .mutate({
+          mutation: StoreBackgroundDataMutation,
+          variables: {
+            age: this.props.age,
+            height: this.props.height,
+            weight: this.props.weight,
+            sex: this.props.sex,
+          },
+        })
+        .then(response => response)
+        .catch(err => {
+          throw err;
+        });
+
+    generateAsyncAction(promise);
+  };
 
   render() {
-    return this._validateValues() ? (
-      <Mutation mutation={StoreBackgroundDataMutation} ignoreResults>
-        {storeBackgroundData => {
-          storeBackgroundData({
-            variables: {
-              age: this.props.age,
-              height: this.props.height,
-              weight: this.props.weight,
-              sex: this.props.sex,
-            },
-          });
-
-          return '';
-        }}
-      </Mutation>
-    ) : (
-      <div />
-    );
+    return <div />;
   }
 }
 
