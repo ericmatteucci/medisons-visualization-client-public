@@ -14,34 +14,36 @@ import { connect } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
-import s from './BackgroundVariablesPane.css';
+import s from './BackgroundDataPane.css';
+import { DataInputModalDisplayNames, EMPTY_VALUE_STRING } from '../../constants/DisplayConstants';
 import {
-  DataInputModalDisplayNames,
-  EMPTY_VALUE_STRING,
-  SELECT_SEX_HINT,
-} from '../../constants/DisplayConstants';
+  AGE_DEFAULT_VALUE,
+  HEIGHT_DEFAULT_VALUE,
+  WEIGHT_DEFAULT_VALUE,
+  SEX_DEFAULT_VALUE,
+} from '../../constants/ValueConstants';
 
 // Sub-component names used for testing
-export const BackgroundVariablesPaneComponentNames = {
+export const BackgroundDataPaneComponentNames = {
   AGE_DISPLAY_BOX: 'BVP_AGE_DISPLAY_BOX',
   HEIGHT_DISPLAY_BOX: 'BVP_HEIGHT_DISPLAY_BOX',
   WEIGHT_DISPLAY_BOX: 'BVP_WEIGHT_DISPLAY_BOX',
   SEX_DISPLAY_BOX: 'BVP_SEX_DISPLAY_BOX',
 };
 
-type BackgroundVariablesPaneBoundPropTypes = {
+type BackgroundDataPaneBoundPropTypes = {
   age: number,
   height: number,
   weight: number,
   sex: string,
 };
 
-type BackgroundVariablesPanePropTypes = BackgroundVariablesPaneBoundPropTypes;
+type BackgroundDataPanePropTypes = BackgroundDataPaneBoundPropTypes;
 
 /**
  * Pane to show the current background variables being used in the system.
  */
-class BackgroundVariablesPane extends React.Component<BackgroundVariablesPanePropTypes> {
+class BackgroundDataPane extends React.Component<BackgroundDataPanePropTypes> {
   static propTypes = {
     age: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -49,50 +51,49 @@ class BackgroundVariablesPane extends React.Component<BackgroundVariablesPanePro
     sex: PropTypes.string.isRequired,
   };
 
-  static mapStateToProps = (state: any): BackgroundVariablesPaneBoundPropTypes => ({
-    age: state.backgroundVariablesReducer.age,
-    height: state.backgroundVariablesReducer.height,
-    weight: state.backgroundVariablesReducer.weight,
-    sex: state.backgroundVariablesReducer.sex,
+  static mapStateToProps = (state: any): BackgroundDataPaneBoundPropTypes => ({
+    age: state.backgroundDataReducer.age,
+    height: state.backgroundDataReducer.height,
+    weight: state.backgroundDataReducer.weight,
+    sex: state.backgroundDataReducer.sex,
   });
 
   render() {
-    const displaySex = this.props.sex === SELECT_SEX_HINT ? EMPTY_VALUE_STRING : this.props.sex;
-    const displayAge = this.props.age === -1 ? EMPTY_VALUE_STRING : this.props.age.toFixed(0);
+    const displaySex = this.props.sex === SEX_DEFAULT_VALUE ? EMPTY_VALUE_STRING : this.props.sex;
+    const displayAge =
+      this.props.age === AGE_DEFAULT_VALUE ? EMPTY_VALUE_STRING : this.props.age.toFixed(0);
     const displayHeight =
-      this.props.height === -1 ? EMPTY_VALUE_STRING : this.props.height.toFixed(0);
+      this.props.height === HEIGHT_DEFAULT_VALUE
+        ? EMPTY_VALUE_STRING
+        : this.props.height.toFixed(0);
     const displayWeight =
-      this.props.weight === -1 ? EMPTY_VALUE_STRING : this.props.weight.toFixed(0);
+      this.props.weight === WEIGHT_DEFAULT_VALUE
+        ? EMPTY_VALUE_STRING
+        : this.props.weight.toFixed(0);
 
     return (
       <div className={s.main}>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.AGE}</div>
-          <div id={BackgroundVariablesPaneComponentNames.AGE_DISPLAY_BOX} className={s.itemValue}>
+          <div id={BackgroundDataPaneComponentNames.AGE_DISPLAY_BOX} className={s.itemValue}>
             {displayAge}
           </div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.HEIGHT}</div>
-          <div
-            id={BackgroundVariablesPaneComponentNames.HEIGHT_DISPLAY_BOX}
-            className={s.itemValue}
-          >
+          <div id={BackgroundDataPaneComponentNames.HEIGHT_DISPLAY_BOX} className={s.itemValue}>
             {displayHeight}
           </div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.WEIGHT}</div>
-          <div
-            id={BackgroundVariablesPaneComponentNames.WEIGHT_DISPLAY_BOX}
-            className={s.itemValue}
-          >
+          <div id={BackgroundDataPaneComponentNames.WEIGHT_DISPLAY_BOX} className={s.itemValue}>
             {displayWeight}
           </div>
         </div>
         <div className={s.item}>
           <div className={s.itemName}>{DataInputModalDisplayNames.SEX}</div>
-          <div id={BackgroundVariablesPaneComponentNames.SEX_DISPLAY_BOX} className={s.itemValue}>
+          <div id={BackgroundDataPaneComponentNames.SEX_DISPLAY_BOX} className={s.itemValue}>
             {displaySex}
           </div>
         </div>
@@ -102,10 +103,8 @@ class BackgroundVariablesPane extends React.Component<BackgroundVariablesPanePro
 }
 
 // Unconnected component for testing purposes
-export const UnconnectedBackgroundVariablesPane = BackgroundVariablesPane;
+export const UnconnectedBackgroundDataPane = BackgroundDataPane;
 
-const ConnectedBackgroundVariablesPane = connect(BackgroundVariablesPane.mapStateToProps)(
-  BackgroundVariablesPane,
-);
+const ConnectedBackgroundDataPane = connect(BackgroundDataPane.mapStateToProps)(BackgroundDataPane);
 
-export default withStyles(s)(ConnectedBackgroundVariablesPane);
+export default withStyles(s)(ConnectedBackgroundDataPane);

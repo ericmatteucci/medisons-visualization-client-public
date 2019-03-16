@@ -13,3 +13,8 @@ export const SignalNames = {
   ECG: 'ecg',
   BP: 'bp',
 };
+
+export const AGE_DEFAULT_VALUE = -1;
+export const HEIGHT_DEFAULT_VALUE = -1;
+export const WEIGHT_DEFAULT_VALUE = -1;
+export const SEX_DEFAULT_VALUE = 'Select...';

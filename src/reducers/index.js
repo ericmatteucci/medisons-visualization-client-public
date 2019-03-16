@@ -3,12 +3,12 @@ import user from './user';
 import runtime from './runtime';
 import signalDataReducer from './signalDataReducer';
 import dataInputReducer from './dataInputReducer';
-import backgroundVariablesReducer from './backgroundVariablesReducer';
+import backgroundDataReducer from './backgroundDataReducer';
 
 const combinedReducer = combineReducers({
   user,
   runtime,
-  backgroundVariablesReducer,
+  backgroundDataReducer,
   dataInputReducer,
   signalDataReducer,
 });

@@ -1,0 +1,8 @@
+query BackgroundDataQuery {
+  backgroundData {
+    age
+    height
+    weight
+    sex
+  }
+}

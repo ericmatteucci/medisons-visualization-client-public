@@ -1,13 +1,4 @@
 // @flow
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,15 +9,19 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './DataInputModal.css';
-import {
-  updateBackgroundVariablesAction,
-  updateDataInputModalVisibleAction,
-} from '../../actions/DataInputModalActions';
+import { updateDataInputModalVisibleAction } from '../../actions/DataInputModalActions';
+import { updateBackgroundDataAction } from '../../actions/BackgroundDataActions';
 import type { DispatchFunctionType } from '../../actions/actionTypes/ActionTypes';
 import {
   DataInputModalDisplayNames,
   DataInputModalErrorMessages,
 } from '../../constants/DisplayConstants';
+import {
+  AGE_DEFAULT_VALUE,
+  HEIGHT_DEFAULT_VALUE,
+  WEIGHT_DEFAULT_VALUE,
+  SEX_DEFAULT_VALUE,
+} from '../../constants/ValueConstants';
 
 // Value options for entering a sex parameter into the system
 const sexOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
@@ -79,10 +74,10 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
 
   static mapStateToProps = (state: any): DataInputModalBoundPropTypes => ({
     dataInputModalVisible: state.dataInputReducer.visible,
-    age: state.backgroundVariablesReducer.age,
-    height: state.backgroundVariablesReducer.height,
-    weight: state.backgroundVariablesReducer.weight,
-    sex: state.backgroundVariablesReducer.sex,
+    age: state.backgroundDataReducer.age,
+    height: state.backgroundDataReducer.height,
+    weight: state.backgroundDataReducer.weight,
+    sex: state.backgroundDataReducer.sex,
   });
 
   constructor(props: DataInputModalPropTypes) {
@@ -120,7 +115,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
 
     if (
       this.state.ageInputState !== '' &&
-      (!Number(this.state.ageInputState) || Number(this.state.ageInputState) < 0)
+      (!Number(this.state.ageInputState) || Number(this.state.ageInputState) <= 0)
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.AGE_ERROR });
       ret = false;
@@ -136,6 +131,9 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.WEIGHT_ERROR });
       ret = false;
+    } else if (this.state.selectedSexState === SEX_DEFAULT_VALUE) {
+      this.setState({ errorMessage: DataInputModalErrorMessages.SEX_ERROR });
+      ret = false;
     }
 
     return ret;
@@ -149,7 +147,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   _handleSubmit = () => {
     if (this._validateValues()) {
       this.props.dispatch(
-        updateBackgroundVariablesAction(
+        updateBackgroundDataAction(
           Number(this.state.ageInputState),
           Number(this.state.heightInputState),
           Number(this.state.weightInputState),
@@ -214,6 +212,17 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
   };
 
   render() {
+    const displayAge =
+      this.state.ageInputState === AGE_DEFAULT_VALUE.toString() ? '' : this.state.ageInputState;
+    const displayHeight =
+      this.state.heightInputState === HEIGHT_DEFAULT_VALUE.toString()
+        ? ''
+        : this.state.heightInputState;
+    const displayWeight =
+      this.state.weightInputState === WEIGHT_DEFAULT_VALUE.toString()
+        ? ''
+        : this.state.weightInputState;
+
     return (
       <div className={s.main}>
         <PlusButton
@@ -233,7 +242,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               <input
                 id={DataInputModalComponentNames.AGE_INPUT_BOX}
                 type="text"
-                value={this.state.ageInputState}
+                value={displayAge}
                 onChange={this._handleAgeInputChange}
               />
             </div>
@@ -242,7 +251,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               <input
                 id={DataInputModalComponentNames.HEIGHT_INPUT_BOX}
                 type="text"
-                value={this.state.heightInputState}
+                value={displayHeight}
                 onChange={this._handleHeightInputChange}
               />
             </div>
@@ -251,7 +260,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
               <input
                 id={DataInputModalComponentNames.WEIGHT_INPUT_BOX}
                 type="text"
-                value={this.state.weightInputState}
+                value={displayWeight}
                 onChange={this._handleWeightInputChange}
               />
             </div>

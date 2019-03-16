@@ -12,13 +12,12 @@ export const DataInputModalErrorMessages = {
   AGE_ERROR: 'Please enter a valid age.',
   HEIGHT_ERROR: 'Please enter a valid height.',
   WEIGHT_ERROR: 'Please enter a valid weight.',
+  SEX_ERROR: 'Please enter a valid sex.',
 };
 
 export const EMPTY_VALUE_STRING = '-';
 
 export const MAIN_CHART_DISPLAY_NAME = 'Derangement Score';
-
-export const SELECT_SEX_HINT = 'Select...';
 
 export const SignalDisplayNames = {
   SPO2: 'Oxygen Saturation',
