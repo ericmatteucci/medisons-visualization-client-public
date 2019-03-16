@@ -1,6 +1,8 @@
 // @flow
 
-const ScoreDisplayNames = {
+export const MAIN_CHART_DISPLAY_NAME = 'Derangement';
+
+export const ScoreDisplayNames = {
   OXYGEN_SATURATION: 'Oxygen Saturation',
   ELECTROCARDIOGRAM: 'ECG',
   BLOOD_PRESSURE: 'Blood Pressure',
@@ -8,5 +10,3 @@ const ScoreDisplayNames = {
   TEMPERATURE: 'Temperature',
   DERANGEMENT: 'Derangement',
 };
-
-export default ScoreDisplayNames;

@@ -13,6 +13,7 @@ import {
   mutations as DatabaseMutations,
   queries as DatabaseQueries,
 } from './graphql/Database/schema';
+import { GraphQLInputObjectType } from 'graphql';
 
 const RootQuery = [
   `
@@ -43,9 +44,16 @@ const Mutation = [
   # 1. Use the GraphQL schema language to [generate a schema](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) with full support for resolvers, interfaces, unions, and custom scalars. The schema produced is completely compatible with [GraphQL.js](https://github.com/graphql/graphql-js).
   # 2. [Mock your GraphQL API](https://www.apollographql.com/docs/graphql-tools/mocking.html) with fine-grained per-type mocking
   # 3. Automatically [stitch multiple schemas together](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html) into one larger API
+  
   type Mutation {
     ${DatabaseMutations}
+    aggregatedScoreRows(
+      from: Long!
+      to: Long!
+    ): String
   }
+  
+  scalar Long
 `,
 ];
 
@@ -70,6 +78,8 @@ const schema = [
   ...NewsSchema,
   ...DatabaseSchema,
 ];
+
+console.log(schema);
 
 export default makeExecutableSchema({
   typeDefs: schema,

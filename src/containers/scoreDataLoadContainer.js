@@ -38,7 +38,7 @@ class ScoreDataLoadContainer extends React.Component<ScoreDataLoadContainerPropT
 
   render() {
     const from = this.props.latestStoredScore;
-    const to = 10000;
+    const to = Date.now();
     return (
       <div>
         <Query
