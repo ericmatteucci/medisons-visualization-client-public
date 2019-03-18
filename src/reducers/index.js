@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import user from './user';
 import runtime from './runtime';
-import signalDataReducer from './signalDataReducer';
+import scoreDataReducer from './scoreDataReducer';
 
 export default combineReducers({
   user,
   runtime,
-  signalDataReducer,
+  scoreDataReducer,
 });

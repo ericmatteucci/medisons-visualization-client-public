@@ -6,6 +6,7 @@ export const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
 
 export const CHART_WINDOW_SIZE = FIVE_SECONDS_MS;
 
+export const SCORE_LOAD_POLL_INTERVAL = FIVE_SECONDS_MS;
 export const SIGNAL_LOAD_POLL_INTERVAL = FIVE_SECONDS_MS;
 
 export const SignalNames = {

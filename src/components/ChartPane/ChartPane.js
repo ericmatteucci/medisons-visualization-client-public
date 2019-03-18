@@ -15,35 +15,35 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import type { ReduxStateType } from '../../reducers/ReduxStateType';
 
 // eslint-disable-next-line css-modules/no-unused-class
-import s from './VitalsChartPane.css';
+import s from './ChartPane.css';
 import ChartDataModel from '../../data/models/ChartDataModel';
-import { SignalDisplayNames } from '../../constants/DisplayConstants';
+import { ScoreDisplayNames } from '../../constants/DisplayConstants';
 import Chart from '../Chart/Chart';
 import {
-  bloodPressureChartWindowSelector,
-  electrocardiogramChartWindowSelector,
-  oxygenSaturationChartWindowSelector,
-} from '../../selectors/ChartWindowSelector';
+  bloodPressureScoreSelector,
+  electrocardiogramScoreSelector,
+  oxygenSaturationScoreSelector,
+} from '../../selectors/ScoreDataSelector';
 
-type VitalsChartBoundPropsType = {
+type ChartPaneBoundPropsType = {
   bloodPressureChartData: ChartDataModel,
   electrocardiogramChartData: ChartDataModel,
   oxygenSaturationChartData: ChartDataModel,
 };
 
-type VitalsChartPanePropTypes = VitalsChartBoundPropsType;
+type ChartPanePropTypes = ChartPaneBoundPropsType;
 
-class VitalsChartPane extends React.Component<VitalsChartPanePropTypes> {
+class ChartPane extends React.Component<ChartPanePropTypes> {
   static propTypes = {
     bloodPressureChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
     electrocardiogramChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
     oxygenSaturationChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
   };
 
-  static mapStateToProps = (state: ReduxStateType): VitalsChartBoundPropsType => ({
-    bloodPressureChartData: bloodPressureChartWindowSelector(state),
-    electrocardiogramChartData: electrocardiogramChartWindowSelector(state),
-    oxygenSaturationChartData: oxygenSaturationChartWindowSelector(state),
+  static mapStateToProps = (state: ReduxStateType): ChartPaneBoundPropsType => ({
+    bloodPressureChartData: bloodPressureScoreSelector(state),
+    electrocardiogramChartData: electrocardiogramScoreSelector(state),
+    oxygenSaturationChartData: oxygenSaturationScoreSelector(state),
   });
 
   render() {
@@ -53,14 +53,14 @@ class VitalsChartPane extends React.Component<VitalsChartPanePropTypes> {
           <div className={s.chart}>
             <Chart
               type="line"
-              title={SignalDisplayNames.BP}
+              title={ScoreDisplayNames.BP}
               chartData={this.props.bloodPressureChartData}
             />
           </div>
           <div className={s.chart}>
             <Chart
               type="line"
-              title={SignalDisplayNames.ECG}
+              title={ScoreDisplayNames.ECG}
               chartData={this.props.electrocardiogramChartData}
             />
           </div>
@@ -69,7 +69,7 @@ class VitalsChartPane extends React.Component<VitalsChartPanePropTypes> {
           <div className={s.chart}>
             <Chart
               type="line"
-              title={SignalDisplayNames.SPO2}
+              title={ScoreDisplayNames.SPO2}
               chartData={this.props.oxygenSaturationChartData}
             />
           </div>
@@ -79,6 +79,6 @@ class VitalsChartPane extends React.Component<VitalsChartPanePropTypes> {
   }
 }
 
-const ConnectedVitalsChartPane = connect(VitalsChartPane.mapStateToProps)(VitalsChartPane);
+const ConnectedChartPane = connect(ChartPane.mapStateToProps)(ChartPane);
 
-export default withStyles(s)(ConnectedVitalsChartPane);
+export default withStyles(s)(ConnectedChartPane);

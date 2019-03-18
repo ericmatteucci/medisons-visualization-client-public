@@ -17,7 +17,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './DerangementScoreChart.css';
 import Chart from '../Chart/Chart';
 import ChartDataModel from '../../data/models/ChartDataModel';
-import { derangementScoreChartWindowSelector } from '../../selectors/ChartWindowSelector';
+import { derangementScoreSelector } from '../../selectors/ScoreDataSelector';
 import { MAIN_CHART_DISPLAY_NAME } from '../../constants/DisplayConstants';
 
 type DerangementScoreChartBoundPropTypes = {
@@ -37,7 +37,7 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
   };
 
   static mapStateToProps = (state: any): DerangementScoreChartBoundPropTypes => ({
-    chartData: derangementScoreChartWindowSelector(state),
+    chartData: derangementScoreSelector(state),
   });
 
   render() {

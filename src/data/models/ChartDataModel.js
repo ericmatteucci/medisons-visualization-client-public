@@ -1,29 +1,26 @@
 // @flow
 
-import type {
-  SignalNameType,
-  SignalDataType,
-  SignalDomainValuesType,
-} from '../reduxModels/SignalDataModel';
+import type { ScoreValueListType, ScoreTimestampType } from '../reduxModels/ScoreDataModel';
 
+export type ChartNameType = string;
 /**
  * The ChartDataModel. This object contains information for domain series data, most
  * likely time-series data consisting of time points.
  */
 export default class ChartDataModel {
-  name: SignalNameType = '';
-  data: SignalDataType = [];
-  domainValues: SignalDomainValuesType = [];
+  name: ChartNameType = '';
+  data: ScoreValueListType = [];
+  domainValues: ScoreTimestampType = [];
 
-  constructor(name: SignalNameType, data: SignalDataType, domainValues: SignalDomainValuesType) {
+  constructor(name: ChartNameType, domainValues: ScoreTimestampType, data: ScoreValueListType) {
     this.name = name;
     this.data = data;
     this.domainValues = domainValues;
   }
 
-  getName = (): SignalNameType => this.name;
+  getName = (): ChartNameType => this.name;
 
-  getData = (): SignalDataType => this.data;
+  getData = (): ScoreValueListType => this.data;
 
-  getDomainValues = (): SignalDomainValuesType => this.domainValues;
+  getDomainValues = (): ScoreTimestampType => this.domainValues;
 }
