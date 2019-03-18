@@ -1,4 +1,4 @@
-query AggregatedDataQuery($from: Long!, $to: Long!) {
+query AggregatedDataQuery($from: Long, $to: Long) {
   aggregatedScoreRows(from: $from, to: $to) {
     timestamp
     value

@@ -48,8 +48,8 @@ const Mutation = [
   type Mutation {
     ${DatabaseMutations}
     aggregatedScoreRows(
-      from: Long!
-      to: Long!
+      from: Long
+      to: Long
     ): String
   }
   
