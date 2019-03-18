@@ -23,43 +23,48 @@ const respiratoryRate = (state: Object): ScoreValueListType =>
 const temperature = (state: Object): ScoreValueListType => state.scoreDataReducer.electrocardiogram;
 
 export class ScoreDataSelector {
-  static getLatestTime = (timestamps: ScoreTimestampType): number => Math.max(timestamps);
+  static getLatestTime = (timestamps: ScoreTimestampType): number => {
+    if (timestamps !== undefined && timestamps.length !== 0) {
+      return Math.max(timestamps);
+    }
+    return 0;
+  };
 
   static getDerangementChartData = (
     timestamps: ScoreTimestampType,
     derangementData: ScoreValueListType,
   ): ChartDataModel =>
-    new ChartDataModel(ScoreDisplayNames.DERANGEMENT, derangementData, timestamps);
+    new ChartDataModel(ScoreDisplayNames.DERANGEMENT, timestamps, derangementData);
 
   static getBloodPressureChartData = (
     timestamps: ScoreTimestampType,
     bloodPressureData: ScoreValueListType,
   ): ChartDataModel =>
-    new ChartDataModel(ScoreDisplayNames.BLOOD_PRESSURE, bloodPressureData, timestamps);
+    new ChartDataModel(ScoreDisplayNames.BLOOD_PRESSURE, timestamps, bloodPressureData);
 
   static getElectrocardiogramChartData = (
     timestamps: ScoreTimestampType,
     electrocardiogramData: ScoreValueListType,
   ): ChartDataModel =>
-    new ChartDataModel(ScoreDisplayNames.ELECTROCARDIOGRAM, electrocardiogramData, timestamps);
+    new ChartDataModel(ScoreDisplayNames.ELECTROCARDIOGRAM, timestamps, electrocardiogramData);
 
   static getOxygenSaturationChartData = (
     timestamps: ScoreTimestampType,
     oxygenSaturationData: ScoreValueListType,
   ): ChartDataModel =>
-    new ChartDataModel(ScoreDisplayNames.OXYGEN_SATURATION, oxygenSaturationData, timestamps);
+    new ChartDataModel(ScoreDisplayNames.OXYGEN_SATURATION, timestamps, oxygenSaturationData);
 
   static getRespiratoryRateChartData = (
     timestamps: ScoreTimestampType,
     respiratoryRateData: ScoreValueListType,
   ): ChartDataModel =>
-    new ChartDataModel(ScoreDisplayNames.RESPIRATORY_RATE, respiratoryRateData, timestamps);
+    new ChartDataModel(ScoreDisplayNames.RESPIRATORY_RATE, timestamps, respiratoryRateData);
 
   static getTemperatureChartData = (
     timestamps: ScoreTimestampType,
     temperatureData: ScoreValueListType,
   ): ChartDataModel =>
-    new ChartDataModel(ScoreDisplayNames.TEMPERATURE, temperatureData, timestamps);
+    new ChartDataModel(ScoreDisplayNames.TEMPERATURE, timestamps, temperatureData);
 }
 
 export const latestScoreTimeSelector = createSelector(

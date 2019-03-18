@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { Query } from 'react-apollo';
 import { PacmanLoader } from 'react-spinners';
 import AggregatedScoreRowsQuery from './queries/AggregatedScoreRows.graphql';
-import { SCORE_LOAD_POLL_INTERVAL } from '../constants/ValueConstants';
 import type { DispatchFunctionType } from '../actions/actionTypes/ActionTypes';
 import { updateScoreDataAction } from '../actions/ScoreDataActions';
 import { latestScoreTimeSelector } from '../selectors/ScoreDataSelector';
@@ -41,27 +40,15 @@ class ScoreDataLoadContainer extends React.Component<ScoreDataLoadContainerPropT
     const to = Date.now();
     return (
       <div>
-        <Query
-          query={AggregatedScoreRowsQuery}
-          variables={{ from, to }}
-          pollInterval={SCORE_LOAD_POLL_INTERVAL}
-        >
+        <Query query={AggregatedScoreRowsQuery} variables={{ from, to }} fetchPolicy="no-cache">
           {({ loading, error, data }) => {
             if (loading) return <PacmanLoader />;
             if (error) return `Error!: ${error.message}`;
             if (data.aggregatedScoreRows) {
-              const scores = Object.values(data.aggregatedScoreRows);
+              const { timestamp, value, bp, spo2, ecg, resp, temp } = data.aggregatedScoreRows;
 
               this.props.dispatch(
-                updateScoreDataAction(
-                  scores.timestamp,
-                  scores.value,
-                  scores.bp,
-                  scores.spo2,
-                  scores.ecg,
-                  scores.resp,
-                  scores.temp,
-                ),
+                updateScoreDataAction(timestamp, value, bp, spo2, ecg, resp, temp),
               );
             }
             return '';
