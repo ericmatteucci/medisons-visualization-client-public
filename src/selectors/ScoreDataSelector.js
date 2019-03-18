@@ -1,15 +1,19 @@
 // @flow
 
 import { createSelector } from 'reselect';
+import { ScoreDisplayNames } from '../constants/DisplayConstants';
+import type { ReduxStateType } from '../reducers/ReduxStateType';
 import type { ScoreTimestampType, ScoreValueListType } from '../data/reduxModels/ScoreDataModel';
 import ChartDataModel from '../data/models/ChartDataModel';
-import { ScoreDisplayNames } from '../constants/DisplayConstants';
 
-const currentTimestamps = (state: Object): ScoreTimestampType => state.scoreDataReducer.timestamp;
+const currentTimestamps = (state: ReduxStateType): ScoreTimestampType =>
+  state.scoreDataReducer.timestamp;
 
-const derangement = (state: Object): ScoreValueListType => state.scoreDataReducer.derangement;
+const derangement = (state: ReduxStateType): ScoreValueListType =>
+  state.scoreDataReducer.derangement;
 
-const bloodPressure = (state: Object): ScoreValueListType => state.scoreDataReducer.bloodPressure;
+const bloodPressure = (state: ReduxStateType): ScoreValueListType =>
+  state.scoreDataReducer.bloodPressure;
 
 const electrocardiogram = (state: Object): ScoreValueListType =>
   state.scoreDataReducer.electrocardiogram;
@@ -22,7 +26,16 @@ const respiratoryRate = (state: Object): ScoreValueListType =>
 
 const temperature = (state: Object): ScoreValueListType => state.scoreDataReducer.electrocardiogram;
 
+/**
+ * Provides methods to couple lists of data values and timestamps.
+ */
 export class ScoreDataSelector {
+  /**
+   * Returns the largest timestamp value contained in the ScoreDataModel,
+   * as this corresponds to the latest time.
+   * @param timestamps All the timestamps in the model
+   * @return {number} The latest time value
+   */
   static getLatestTime = (timestamps: ScoreTimestampType): number => {
     if (timestamps !== undefined && timestamps.length !== 0) {
       return Math.max(timestamps);
