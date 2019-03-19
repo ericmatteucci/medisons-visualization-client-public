@@ -60,35 +60,31 @@ class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDat
    * This is invoked to retrieve background data from the DB.
    */
   fetchBackgroundData = () => {
-    const promise = () =>
-      this.props.client
-        .query({
-          query: BackgroundDataQuery,
-          fetchPolicy: 'no-cache',
-        })
-        .then(response => response)
-        .then(data => {
-          if (data.data && data.data.backgroundData) {
-            const { age, height, weight, sex } = data.data.backgroundData;
+    const promise = this.props.client
+      .query({
+        query: BackgroundDataQuery,
+        fetchPolicy: 'no-cache',
+      })
+      .then(response => response)
+      .then(data => {
+        if (data.data && data.data.backgroundData) {
+          const { age, height, weight, sex } = data.data.backgroundData;
 
-            this.props.dispatch(updateBackgroundDataAction(age, height, weight, sex));
+          this.props.dispatch(updateBackgroundDataAction(age, height, weight, sex));
 
-            if (this._updateTimer) {
-              clearTimeout(this._updateTimer);
-              this._updateTimer = null;
-              this._exponentialRetries = 0;
-            }
-          } else if (this._exponentialRetries < 200) {
-            this._exponentialRetries *= 2;
-            this._updateTimer = setTimeout(
-              this.fetchBackgroundData,
-              this._exponentialRetries * 1000,
-            );
+          if (this._updateTimer) {
+            clearTimeout(this._updateTimer);
+            this._updateTimer = null;
+            this._exponentialRetries = 0;
           }
-        })
-        .catch(err => {
-          throw err;
-        });
+        } else if (this._exponentialRetries < 200) {
+          this._exponentialRetries *= 2;
+          this._updateTimer = setTimeout(this.fetchBackgroundData, this._exponentialRetries * 1000);
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
 
     generateAsyncAction(promise);
   };

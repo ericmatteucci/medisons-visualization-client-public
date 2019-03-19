@@ -1,6 +1,10 @@
 // @flow
-import CompositeSignalDataModel from '../data/reduxModels/CompositeSignalDataModel';
+import { CompositeScoreDataModel } from '../data/reduxModels/ScoreDataModel';
+import BackgroundDataModel from '../data/reduxModels/BackgroundDataModel';
+import DataInputModalModel from '../data/reduxModels/DataInputModalModel';
 
 export type ReduxStateType = {
-  signalDataReducer: CompositeSignalDataModel,
+  backgroundDataReducer: BackgroundDataModel,
+  dataInputReducer: DataInputModalModel,
+  scoreDataReducer: CompositeScoreDataModel,
 };

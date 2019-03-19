@@ -17,10 +17,13 @@ export const DataInputModalErrorMessages = {
 
 export const EMPTY_VALUE_STRING = '-';
 
-export const MAIN_CHART_DISPLAY_NAME = 'Derangement Score';
+export const MAIN_CHART_DISPLAY_NAME = 'Derangement';
 
-export const SignalDisplayNames = {
-  SPO2: 'Oxygen Saturation',
-  ECG: 'ECG',
-  BP: 'Blood Pressure',
+export const ScoreDisplayNames = {
+  OXYGEN_SATURATION: 'Oxygen Saturation',
+  ELECTROCARDIOGRAM: 'ECG',
+  BLOOD_PRESSURE: 'Blood Pressure',
+  RESPIRATORY_RATE: 'Respiratory Rate',
+  TEMPERATURE: 'Temperature',
+  DERANGEMENT: 'Derangement',
 };

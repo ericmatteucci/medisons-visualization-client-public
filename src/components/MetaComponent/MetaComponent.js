@@ -13,7 +13,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './MetaComponent.css';
-import VitalsChartPane from '../VitalsChartPane/VitalsChartPane';
+import VitalsChartPane from '../ChartPane/ChartPane';
 import DerangementScoreChart from '../DerangementScoreChart/DerangementScoreChart';
 
 type MetaComponentPropsType = {};

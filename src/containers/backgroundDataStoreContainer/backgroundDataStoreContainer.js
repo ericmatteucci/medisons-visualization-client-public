@@ -75,21 +75,20 @@ class BackgroundDataStoreContainerComponent extends React.Component<BackgroundDa
    * Generate an async function to store new background data in the DB.
    */
   storeBackgroundData = () => {
-    const promise = () =>
-      this.props.client
-        .mutate({
-          mutation: StoreBackgroundDataMutation,
-          variables: {
-            age: this.props.age,
-            height: this.props.height,
-            weight: this.props.weight,
-            sex: this.props.sex,
-          },
-        })
-        .then(response => response)
-        .catch(err => {
-          throw err;
-        });
+    const promise = this.props.client
+      .mutate({
+        mutation: StoreBackgroundDataMutation,
+        variables: {
+          age: this.props.age,
+          height: this.props.height,
+          weight: this.props.weight,
+          sex: this.props.sex,
+        },
+      })
+      .then(response => response)
+      .catch(err => {
+        throw err;
+      });
 
     generateAsyncAction(promise);
   };

@@ -11,7 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
-import SignalDataLoadContainer from '../containers/signalDataLoadContainer/signalDataLoadContainer';
+import ScoreDataLoadContainer from '../containers/scoreDataLoadContainer/scoreDataLoadContainer';
 import MetaComponent from './MetaComponent/MetaComponent';
 import BackgroundDataStoreContainer from '../containers/backgroundDataStoreContainer/backgroundDataStoreContainer';
 import BackgroundDataLoadContainer from '../containers/backgroundDataLoadContainer/backgroundDataLoadContainer';
@@ -86,7 +86,7 @@ class App extends React.PureComponent {
       <div style={this._getStyle()}>
         <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
         <div style={this._getContainerStyle()}>
-          <SignalDataLoadContainer />
+          <ScoreDataLoadContainer client={client} />
         </div>
         <BackgroundDataStoreContainer client={client} />
         <BackgroundDataLoadContainer client={client} />
