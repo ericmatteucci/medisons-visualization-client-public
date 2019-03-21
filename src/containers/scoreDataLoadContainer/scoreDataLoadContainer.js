@@ -56,9 +56,9 @@ class ScoreDataLoadContainer extends React.Component<ScoreDataLoadContainerPropT
 
   static mapStateToProps = (state: ReduxStateType): ScoreDataLoadContainerBoundPropsType => ({
     latestStoredScore: latestScoreTimeSelector(state),
-    isScoreDataError: state.compositeScoreData.scoreDataError.isError,
-    scoreDataErrorMessage: state.compositeScoreData.scoreDataError.message,
-    scoreDataLoading: state.compositeScoreData.scoreDataLoading,
+    isScoreDataError: state.compositeScoreDataReducer.scoreDataError.isError,
+    scoreDataErrorMessage: state.compositeScoreDataReducer.scoreDataError.message,
+    scoreDataLoading: state.compositeScoreDataReducer.scoreDataLoading,
   });
 
   constructor(props: ScoreDataLoadContainerPropTypes) {

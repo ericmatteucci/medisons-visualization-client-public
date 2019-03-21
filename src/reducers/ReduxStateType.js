@@ -6,5 +6,5 @@ import DataInputModalModel from '../data/reduxModels/DataInputModalModel';
 export type ReduxStateType = {
   backgroundDataReducer: BackgroundDataModel,
   dataInputReducer: DataInputModalModel,
-  compositeScoreData: CompositeScoreDataModel,
+  compositeScoreDataReducer: CompositeScoreDataModel,
 };

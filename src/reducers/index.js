@@ -3,12 +3,12 @@
 import { combineReducers } from 'redux';
 import dataInputReducer from './dataInputReducer';
 import backgroundDataReducer from './backgroundDataReducer';
-import compositeScoreData from './compositeScoreData';
+import compositeScoreDataReducer from './compositeScoreDataReducer';
 
 const combinedReducer = combineReducers({
   backgroundDataReducer,
   dataInputReducer,
-  compositeScoreData,
+  compositeScoreDataReducer,
 });
 
 export default combinedReducer;

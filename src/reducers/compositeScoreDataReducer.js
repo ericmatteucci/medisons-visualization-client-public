@@ -55,7 +55,7 @@ const scoreDataLoading = (
   action: UpdateScoreDataLoadingActionType,
 ): boolean => (action.type === UPDATE_SCORE_DATA_LOADING_ACTION ? action.scoreDataLoading : state);
 
-const compositeScoreData = (
+const compositeScoreDataReducer = (
   state: CompositeScoreDataModel = new CompositeScoreDataModel(),
   action: UpdateScoreDataActionType &
     UpdateScoreDataErrorActionType &
@@ -69,4 +69,4 @@ const compositeScoreData = (
   return newOne;
 };
 
-export default compositeScoreData;
+export default compositeScoreDataReducer;
