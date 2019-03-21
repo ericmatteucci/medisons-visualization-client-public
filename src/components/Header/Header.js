@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *
@@ -12,8 +14,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './Header.css';
+import DataInputModal from '../DataInputModal/DataInputModal';
+import BackgroundDataPane from '../BackgroundDataPane/BackgroundDataPane';
 
-class Header extends React.Component {
+type HeaderPropTypes = {};
+
+class Header extends React.Component<HeaderPropTypes> {
   render() {
     return (
       <div className={s.root}>
@@ -22,6 +28,8 @@ class Header extends React.Component {
             <h1 className={s.bannerTitle}>MediSons</h1>
             <p className={s.bannerDesc}>PhysioRange</p>
           </div>
+          <BackgroundDataPane />
+          <DataInputModal />
         </div>
       </div>
     );

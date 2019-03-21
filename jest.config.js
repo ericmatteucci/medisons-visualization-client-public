@@ -57,6 +57,8 @@ module.exports = {
   // https://facebook.github.io/jest/docs/en/configuration.html#modulefileextensions-array-string
   moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
 
+  setupFiles: ['<rootDir>/enzyme.config.js'],
+
   // moduleDirectories: // [array<string>]
 
   // A map from regular expressions to module names that allow to stub out resources,

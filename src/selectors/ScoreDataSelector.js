@@ -7,24 +7,25 @@ import type { ScoreTimestampType, ScoreValueListType } from '../data/reduxModels
 import ChartDataModel from '../data/models/ChartDataModel';
 
 const currentTimestamps = (state: ReduxStateType): ScoreTimestampType =>
-  state.scoreDataReducer.timestamp;
+  state.scoreDataReducer.scoreData.timestamp;
 
 const derangement = (state: ReduxStateType): ScoreValueListType =>
-  state.scoreDataReducer.derangement;
+  state.scoreDataReducer.scoreData.derangement;
 
 const bloodPressure = (state: ReduxStateType): ScoreValueListType =>
-  state.scoreDataReducer.bloodPressure;
+  state.scoreDataReducer.scoreData.bloodPressure;
 
 const electrocardiogram = (state: Object): ScoreValueListType =>
-  state.scoreDataReducer.electrocardiogram;
+  state.scoreDataReducer.scoreData.electrocardiogram;
 
 const oxygenSaturation = (state: Object): ScoreValueListType =>
-  state.scoreDataReducer.electrocardiogram;
+  state.scoreDataReducer.scoreData.oxygenSaturation;
 
 const respiratoryRate = (state: Object): ScoreValueListType =>
-  state.scoreDataReducer.electrocardiogram;
+  state.scoreDataReducer.scoreData.respiratoryRate;
 
-const temperature = (state: Object): ScoreValueListType => state.scoreDataReducer.electrocardiogram;
+const temperature = (state: Object): ScoreValueListType =>
+  state.scoreDataReducer.scoreData.temperature;
 
 /**
  * Provides methods to couple lists of data values and timestamps.

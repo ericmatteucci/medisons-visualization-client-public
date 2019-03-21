@@ -11,8 +11,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApolloProvider } from 'react-apollo';
-import ScoreDataLoadContainer from '../containers/scoreDataLoadContainer';
+import ScoreDataLoadContainer from '../containers/scoreDataLoadContainer/scoreDataLoadContainer';
 import MetaComponent from './MetaComponent/MetaComponent';
+import BackgroundDataStoreContainer from '../containers/backgroundDataStoreContainer/backgroundDataStoreContainer';
+import BackgroundDataLoadContainer from '../containers/backgroundDataLoadContainer/backgroundDataLoadContainer';
 
 const ContextType = {
   // Enables critical path CSS rendering
@@ -72,6 +74,7 @@ class App extends React.PureComponent {
     position: 'fixed',
     top: '50%',
     left: '50%',
+    transform: 'translate(-50%, -50%)',
   });
 
   render() {
@@ -83,8 +86,10 @@ class App extends React.PureComponent {
       <div style={this._getStyle()}>
         <ApolloProvider client={client}>{this.props.children}</ApolloProvider>
         <div style={this._getContainerStyle()}>
-          <ScoreDataLoadContainer />
+          <ScoreDataLoadContainer client={client} />
         </div>
+        <BackgroundDataStoreContainer client={client} />
+        <BackgroundDataLoadContainer client={client} />
         <MetaComponent />
       </div>
     );
