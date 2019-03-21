@@ -7,25 +7,25 @@ import type { ScoreTimestampType, ScoreValueListType } from '../data/reduxModels
 import ChartDataModel from '../data/models/ChartDataModel';
 
 const currentTimestamps = (state: ReduxStateType): ScoreTimestampType =>
-  state.scoreDataReducer.scoreData.timestamp;
+  state.compositeScoreDataReducer.scoreData.timestamp;
 
 const derangement = (state: ReduxStateType): ScoreValueListType =>
-  state.scoreDataReducer.scoreData.derangement;
+  state.compositeScoreDataReducer.scoreData.derangement;
 
 const bloodPressure = (state: ReduxStateType): ScoreValueListType =>
-  state.scoreDataReducer.scoreData.bloodPressure;
+  state.compositeScoreDataReducer.scoreData.bloodPressure;
 
-const electrocardiogram = (state: Object): ScoreValueListType =>
-  state.scoreDataReducer.scoreData.electrocardiogram;
+const electrocardiogram = (state: ReduxStateType): ScoreValueListType =>
+  state.compositeScoreDataReducer.scoreData.electrocardiogram;
 
-const oxygenSaturation = (state: Object): ScoreValueListType =>
-  state.scoreDataReducer.scoreData.oxygenSaturation;
+const oxygenSaturation = (state: ReduxStateType): ScoreValueListType =>
+  state.compositeScoreDataReducer.scoreData.oxygenSaturation;
 
-const respiratoryRate = (state: Object): ScoreValueListType =>
-  state.scoreDataReducer.scoreData.respiratoryRate;
+const respiratoryRate = (state: ReduxStateType): ScoreValueListType =>
+  state.compositeScoreDataReducer.scoreData.respiratoryRate;
 
-const temperature = (state: Object): ScoreValueListType =>
-  state.scoreDataReducer.scoreData.temperature;
+const temperature = (state: ReduxStateType): ScoreValueListType =>
+  state.compositeScoreDataReducer.scoreData.temperature;
 
 /**
  * Provides methods to couple lists of data values and timestamps.
@@ -38,8 +38,8 @@ export class ScoreDataSelector {
    * @return {number} The latest time value
    */
   static getLatestTime = (timestamps: ScoreTimestampType): number => {
-    if (timestamps !== undefined && timestamps.length !== 0) {
-      return Math.max(timestamps);
+    if (timestamps !== undefined && timestamps.length > 0) {
+      return timestamps[timestamps.length - 1];
     }
     return 0;
   };

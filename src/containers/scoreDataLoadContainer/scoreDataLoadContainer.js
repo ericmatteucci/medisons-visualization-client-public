@@ -56,9 +56,9 @@ class ScoreDataLoadContainer extends React.Component<ScoreDataLoadContainerPropT
 
   static mapStateToProps = (state: ReduxStateType): ScoreDataLoadContainerBoundPropsType => ({
     latestStoredScore: latestScoreTimeSelector(state),
-    isScoreDataError: state.scoreDataReducer.scoreDataError.isError,
-    scoreDataErrorMessage: state.scoreDataReducer.scoreDataError.message,
-    scoreDataLoading: state.scoreDataReducer.scoreDataLoading,
+    isScoreDataError: state.compositeScoreDataReducer.scoreDataError.isError,
+    scoreDataErrorMessage: state.compositeScoreDataReducer.scoreDataError.message,
+    scoreDataLoading: state.compositeScoreDataReducer.scoreDataLoading,
   });
 
   constructor(props: ScoreDataLoadContainerPropTypes) {
@@ -87,7 +87,7 @@ class ScoreDataLoadContainer extends React.Component<ScoreDataLoadContainerPropT
    * This is invoked to retrieve score data from the DB on an interval.
    */
   fetchScoreData = () => {
-    const from = this.props.latestStoredScore;
+    const from = this.props.latestStoredScore + 1; // Ensure we don't "re-fetch" data
     const to = Date.now();
 
     const promise = this.props.client
