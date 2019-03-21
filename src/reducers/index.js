@@ -1,17 +1,14 @@
-import { combineReducers } from 'redux';
-import user from './user';
-import runtime from './runtime';
+// @flow
 
+import { combineReducers } from 'redux';
 import dataInputReducer from './dataInputReducer';
 import backgroundDataReducer from './backgroundDataReducer';
-import scoreDataReducer from './scoreDataReducer';
+import compositeScoreData from './compositeScoreData';
 
 const combinedReducer = combineReducers({
-  user,
-  runtime,
   backgroundDataReducer,
   dataInputReducer,
-  scoreDataReducer,
+  compositeScoreData,
 });
 
 export default combinedReducer;
