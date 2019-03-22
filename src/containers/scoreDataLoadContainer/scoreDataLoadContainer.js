@@ -26,7 +26,7 @@ type ScoreDataLoadContainerBoundPropsType = {
   latestStoredScore: number,
   scoreDataLoading: boolean,
   isScoreDataError: boolean,
-  scoreDataErrorMessage: String,
+  scoreDataErrorMessage: string,
 };
 
 type ScoreDataLoadContainerConnectedPropsType = {
@@ -81,7 +81,7 @@ class ScoreDataLoadContainer extends React.Component<ScoreDataLoadContainerPropT
    */
   _updateTimer: ?number;
 
-  _getErrorDiv = (message: String) => <div className={s.errorMessage}>{message}</div>;
+  _getErrorDiv = (message: string) => <div className={s.errorMessage}>{message}</div>;
 
   /**
    * This is invoked to retrieve score data from the DB on an interval.

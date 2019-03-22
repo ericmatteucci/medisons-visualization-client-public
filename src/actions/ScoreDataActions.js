@@ -19,7 +19,7 @@ export type UpdateScoreDataActionType = {
 
 export type UpdateScoreDataErrorActionType = {
   isError: boolean,
-  message: String,
+  message: string,
 } & ActionType;
 
 export type UpdateScoreDataLoadingActionType = {
@@ -47,7 +47,7 @@ export const updateScoreDataAction = (
 
 export const updateScoreDataErrorAction = (
   isError: boolean,
-  message: String,
+  message: string,
 ): UpdateScoreDataErrorActionType => ({
   type: UPDATE_SCORE_DATA_ERROR_ACTION,
   isError,

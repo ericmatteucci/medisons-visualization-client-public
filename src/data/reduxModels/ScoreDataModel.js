@@ -18,7 +18,7 @@ export class ScoreDataModel {
 
 export class ScoreDataErrorModel {
   isError: boolean = false;
-  message: String = '';
+  message: string = '';
 }
 
 export class CompositeScoreDataModel {

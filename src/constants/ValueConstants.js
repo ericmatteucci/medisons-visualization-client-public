@@ -4,7 +4,7 @@ export const ONE_SECOND_MS = 1000;
 export const FIVE_SECONDS_MS = ONE_SECOND_MS * 5;
 export const ONE_MINUTE_MS = ONE_SECOND_MS * 60;
 
-export const CHART_WINDOW_SIZE = FIVE_SECONDS_MS;
+export const CHART_WINDOW_SIZE = ONE_MINUTE_MS;
 
 export const SCORE_LOAD_INTERVAL = FIVE_SECONDS_MS;
 
