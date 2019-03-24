@@ -60,13 +60,11 @@ const compositeScoreDataReducer = (
   action: UpdateScoreDataActionType &
     UpdateScoreDataErrorActionType &
     UpdateScoreDataLoadingActionType,
-): CompositeScoreDataModel => {
-  const newOne = newState(state, {
+): CompositeScoreDataModel =>
+  newState(state, {
     scoreData: scoreData(state.scoreData, action),
     scoreDataError: scoreDataError(state.scoreDataError, action),
     scoreDataLoading: scoreDataLoading(state.scoreDataLoading, action),
   });
-  return newOne;
-};
 
 export default compositeScoreDataReducer;

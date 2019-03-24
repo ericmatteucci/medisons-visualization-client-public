@@ -10,7 +10,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import ReactEcharts from 'echarts-for-react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
@@ -18,18 +17,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Chart.css';
 import ChartDataModel from '../../data/models/ChartDataModel';
 import TimeUtilities from '../../lib/TimeUtilities';
-import { CHART_GROUP } from '../../constants/ValueConstants';
-import { updateChartViewRangeAction } from '../../actions/ChartActions';
-import type { DispatchFunctionType } from '../../actions/actionTypes/ActionTypes';
-
-type ChartBoundPropsType = {
-  viewStart: number,
-  viewEnd: number,
-};
-
-type ChartConnectedPropsType = {
-  dispatch: DispatchFunctionType,
-};
+import {
+  CHART_GROUP,
+  DEFAULT_CHART_VIEW_END,
+  DEFAULT_CHART_VIEW_START,
+} from '../../constants/ValueConstants';
 
 type ChartInjectedPropsType = {
   type: string,
@@ -39,16 +31,13 @@ type ChartInjectedPropsType = {
   overrideChartStyle: ?Function,
 };
 
-type ChartPropsType = ChartBoundPropsType & ChartConnectedPropsType & ChartInjectedPropsType;
+type ChartPropsType = ChartInjectedPropsType;
 
 class Chart extends React.Component<ChartPropsType> {
   static propTypes = {
     type: PropTypes.string.isRequired,
     chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
     showSlider: PropTypes.bool.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    viewStart: PropTypes.number.isRequired,
-    viewEnd: PropTypes.number.isRequired,
     overrideStyles: PropTypes.string,
     overrideChartStyle: PropTypes.func,
   };
@@ -58,10 +47,16 @@ class Chart extends React.Component<ChartPropsType> {
     overrideChartStyle: null,
   };
 
-  static mapStateToProps = (state: any): ChartBoundPropsType => ({
-    viewStart: state.chartViewRangeReducer.start,
-    viewEnd: state.chartViewRangeReducer.end,
-  });
+  static chartLabelFormatter(index: number, value: number) {
+    return TimeUtilities.epochToLocalDate(value);
+  }
+
+  static chartTooltipFormatter(params: Array<Object>) {
+    if (params[0].value) {
+      return `${TimeUtilities.epochToLocalDate(params[0].name)} - ${params[0].value.toFixed(2)}`;
+    }
+    return TimeUtilities.epochToLocalDate(params[0].name);
+  }
 
   componentDidMount() {
     if (this._initialChartRender) {
@@ -70,15 +65,28 @@ class Chart extends React.Component<ChartPropsType> {
       const chart = this._chartRef.current.getEchartsInstance();
       chart.group = CHART_GROUP;
       this._initialChartRender = false;
-
-      chart.on('dataZoom', e => {
-        this.props.dispatch(updateChartViewRangeAction(e.start, e.end));
-      });
     }
   }
 
   shouldComponentUpdate(nextProps: ChartPropsType) {
-    return this.props.chartData !== nextProps.chartData;
+    if (this.props.chartData !== nextProps.chartData) {
+      const chart = this._chartRef.current.getEchartsInstance();
+
+      chart.setOption({
+        series: [
+          {
+            data: this.props.chartData.getData(),
+          },
+        ],
+        xAxis: [
+          {
+            data: this.props.chartData.getDomainValues(),
+          },
+        ],
+      });
+    }
+
+    return false;
   }
 
   /**
@@ -86,25 +94,32 @@ class Chart extends React.Component<ChartPropsType> {
    * @private
    */
   _getChartOptions = (): Object => ({
-    tooltip: {},
-    xAxis: {
-      data: this.props.chartData.getDomainValues(),
-      axisLabel: {
-        formatter: TimeUtilities.epochToLocalDate,
-      },
+    tooltip: {
+      trigger: 'axis',
+      formatter: Chart.chartTooltipFormatter,
     },
+    xAxis: [
+      {
+        data: this.props.chartData.getDomainValues(),
+        axisLabel: {
+          formatter: TimeUtilities.epochToLocalDate,
+        },
+      },
+    ],
     yAxis: {},
     dataZoom: [
       {
         type: 'slider',
         show: this.props.showSlider,
-        labelFormatter: TimeUtilities.epochToLocalDate,
+        start: DEFAULT_CHART_VIEW_START,
+        end: DEFAULT_CHART_VIEW_END,
+        labelFormatter: Chart.chartLabelFormatter,
       },
       {
         type: 'inside',
         zoomOnMouseWheel: false,
-        start: this.props.viewStart,
-        end: this.props.viewEnd,
+        start: DEFAULT_CHART_VIEW_START,
+        end: DEFAULT_CHART_VIEW_END,
       },
     ],
     series: [
@@ -145,6 +160,5 @@ class Chart extends React.Component<ChartPropsType> {
     );
   }
 }
-const ConnectedChart = connect(Chart.mapStateToProps)(Chart);
 
-export default withStyles(s)(ConnectedChart);
+export default withStyles(s)(Chart);
