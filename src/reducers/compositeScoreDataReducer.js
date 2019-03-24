@@ -22,15 +22,15 @@ const scoreData = (
   action: UpdateScoreDataActionType,
 ): ScoreDataModel => {
   if (action.type === UPDATE_SCORE_DATA_ACTION) {
-    return newState(state, {
-      timestamp: action.timestamp,
-      derangement: action.derangement,
-      bloodPressure: action.bloodPressure,
-      electrocardiogram: action.electrocardiogram,
-      oxygenSaturation: action.oxygenSaturation,
-      respiratoryRate: action.respiratoryRate,
-      temperature: action.temperature,
-    });
+    return state.mergeData(
+      action.timestamp,
+      action.derangement,
+      action.bloodPressure,
+      action.electrocardiogram,
+      action.oxygenSaturation,
+      action.respiratoryRate,
+      action.temperature,
+    );
   }
 
   return state;
@@ -55,16 +55,18 @@ const scoreDataLoading = (
   action: UpdateScoreDataLoadingActionType,
 ): boolean => (action.type === UPDATE_SCORE_DATA_LOADING_ACTION ? action.scoreDataLoading : state);
 
-const scoreDataReducer = (
+const compositeScoreDataReducer = (
   state: CompositeScoreDataModel = new CompositeScoreDataModel(),
   action: UpdateScoreDataActionType &
     UpdateScoreDataErrorActionType &
     UpdateScoreDataLoadingActionType,
-): CompositeScoreDataModel =>
-  newState(state, {
+): CompositeScoreDataModel => {
+  const newOne = newState(state, {
     scoreData: scoreData(state.scoreData, action),
     scoreDataError: scoreDataError(state.scoreDataError, action),
     scoreDataLoading: scoreDataLoading(state.scoreDataLoading, action),
   });
+  return newOne;
+};
 
-export default scoreDataReducer;
+export default compositeScoreDataReducer;
