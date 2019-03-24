@@ -48,6 +48,7 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
           title={MAIN_CHART_DISPLAY_NAME}
           chartData={this.props.chartData}
           overrideStyles={s.chart}
+          showSlider
         />
       </div>
     );

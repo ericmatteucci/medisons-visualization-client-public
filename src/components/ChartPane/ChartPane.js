@@ -17,18 +17,21 @@ import type { ReduxStateType } from '../../reducers/ReduxStateType';
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './ChartPane.css';
 import ChartDataModel from '../../data/models/ChartDataModel';
-import { ScoreDisplayNames } from '../../constants/DisplayConstants';
 import Chart from '../Chart/Chart';
 import {
   bloodPressureScoreSelector,
   electrocardiogramScoreSelector,
   oxygenSaturationScoreSelector,
+  respiratoryRateScoreSelector,
+  temperatureScoreSelector,
 } from '../../selectors/ScoreDataSelector';
 
 type ChartPaneBoundPropsType = {
   bloodPressureChartData: ChartDataModel,
   electrocardiogramChartData: ChartDataModel,
   oxygenSaturationChartData: ChartDataModel,
+  respiratoryRateChartData: ChartDataModel,
+  temperatureChartData: ChartDataModel,
 };
 
 type ChartPanePropTypes = ChartPaneBoundPropsType;
@@ -38,42 +41,26 @@ class ChartPane extends React.Component<ChartPanePropTypes> {
     bloodPressureChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
     electrocardiogramChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
     oxygenSaturationChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
+    respiratoryRateChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
+    temperatureChartData: PropTypes.instanceOf(ChartDataModel).isRequired,
   };
 
   static mapStateToProps = (state: ReduxStateType): ChartPaneBoundPropsType => ({
     bloodPressureChartData: bloodPressureScoreSelector(state),
     electrocardiogramChartData: electrocardiogramScoreSelector(state),
     oxygenSaturationChartData: oxygenSaturationScoreSelector(state),
+    respiratoryRateChartData: respiratoryRateScoreSelector(state),
+    temperatureChartData: temperatureScoreSelector(state),
   });
 
   render() {
     return (
       <div className={s.main}>
-        <div className={s.column}>
-          <div className={s.chart}>
-            <Chart
-              type="line"
-              title={ScoreDisplayNames.BP}
-              chartData={this.props.bloodPressureChartData}
-            />
-          </div>
-          <div className={s.chart}>
-            <Chart
-              type="line"
-              title={ScoreDisplayNames.ECG}
-              chartData={this.props.electrocardiogramChartData}
-            />
-          </div>
-        </div>
-        <div className={s.column}>
-          <div className={s.chart}>
-            <Chart
-              type="line"
-              title={ScoreDisplayNames.SPO2}
-              chartData={this.props.oxygenSaturationChartData}
-            />
-          </div>
-        </div>
+        <Chart type="line" chartData={this.props.bloodPressureChartData} showSlider={false} />
+        <Chart type="line" chartData={this.props.electrocardiogramChartData} showSlider={false} />
+        <Chart type="line" chartData={this.props.oxygenSaturationChartData} showSlider={false} />
+        <Chart type="line" chartData={this.props.respiratoryRateChartData} showSlider={false} />
+        <Chart type="line" chartData={this.props.temperatureChartData} showSlider={false} />
       </div>
     );
   }

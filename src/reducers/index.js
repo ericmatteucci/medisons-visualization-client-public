@@ -1,17 +1,15 @@
 import { combineReducers } from 'redux';
-import user from './user';
-import runtime from './runtime';
 
 import dataInputReducer from './dataInputReducer';
 import backgroundDataReducer from './backgroundDataReducer';
 import scoreDataReducer from './scoreDataReducer';
+import chartViewRangeReducer from './chartViewRangeReducer';
 
 const combinedReducer = combineReducers({
-  user,
-  runtime,
   backgroundDataReducer,
   dataInputReducer,
   scoreDataReducer,
+  chartViewRangeReducer,
 });
 
 export default combinedReducer;

@@ -10,6 +10,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import ReactEcharts from 'echarts-for-react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
@@ -17,20 +18,37 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Chart.css';
 import ChartDataModel from '../../data/models/ChartDataModel';
 import TimeUtilities from '../../lib/TimeUtilities';
+import { CHART_GROUP } from '../../constants/ValueConstants';
+import { updateChartViewRangeAction } from '../../actions/ChartActions';
+import type { DispatchFunctionType } from '../../actions/actionTypes/ActionTypes';
 
-type ChartInjectedPropTypes = {
+type ChartBoundPropsType = {
+  viewStart: number,
+  viewEnd: number,
+};
+
+type ChartConnectedPropsType = {
+  dispatch: DispatchFunctionType,
+};
+
+type ChartInjectedPropsType = {
   type: string,
   chartData: ChartDataModel,
+  showSlider: boolean,
   overrideStyles: ?string,
   overrideChartStyle: ?Function,
 };
 
-type ChartPropTypes = ChartInjectedPropTypes;
+type ChartPropsType = ChartBoundPropsType & ChartConnectedPropsType & ChartInjectedPropsType;
 
-class Chart extends React.Component<ChartPropTypes> {
+class Chart extends React.Component<ChartPropsType> {
   static propTypes = {
     type: PropTypes.string.isRequired,
     chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
+    showSlider: PropTypes.bool.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    viewStart: PropTypes.number.isRequired,
+    viewEnd: PropTypes.number.isRequired,
     overrideStyles: PropTypes.string,
     overrideChartStyle: PropTypes.func,
   };
@@ -40,14 +58,34 @@ class Chart extends React.Component<ChartPropTypes> {
     overrideChartStyle: null,
   };
 
+  static mapStateToProps = (state: any): ChartBoundPropsType => ({
+    viewStart: state.chartViewRangeReducer.start,
+    viewEnd: state.chartViewRangeReducer.end,
+  });
+
+  componentDidMount() {
+    if (this._initialChartRender) {
+      // This allows us to connect the charts together so
+      // they can be zoomed and panned in unison.
+      const chart = this._chartRef.current.getEchartsInstance();
+      chart.group = CHART_GROUP;
+      this._initialChartRender = false;
+
+      chart.on('dataZoom', e => {
+        this.props.dispatch(updateChartViewRangeAction(e.start, e.end));
+      });
+    }
+  }
+
+  shouldComponentUpdate(nextProps: ChartPropsType) {
+    return this.props.chartData !== nextProps.chartData;
+  }
+
   /**
    * Get the chart options for the chart object.
    * @private
    */
   _getChartOptions = (): Object => ({
-    title: {
-      text: this.props.chartData.getName(),
-    },
     tooltip: {},
     xAxis: {
       data: this.props.chartData.getDomainValues(),
@@ -56,6 +94,19 @@ class Chart extends React.Component<ChartPropTypes> {
       },
     },
     yAxis: {},
+    dataZoom: [
+      {
+        type: 'slider',
+        show: this.props.showSlider,
+        labelFormatter: TimeUtilities.epochToLocalDate,
+      },
+      {
+        type: 'inside',
+        zoomOnMouseWheel: false,
+        start: this.props.viewStart,
+        end: this.props.viewEnd,
+      },
+    ],
     series: [
       {
         type: this.props.type,
@@ -65,14 +116,20 @@ class Chart extends React.Component<ChartPropTypes> {
   });
 
   _getDefaultChartStyle = (): Object => ({
-    width: '100%',
     height: '100%',
   });
+
+  // Local state variable to track if the chart has been initialized
+  _initialChartRender = true;
+
+  // The ref for this chart
+  _chartRef = React.createRef();
 
   render() {
     return (
       <div className={this.props.overrideStyles ? this.props.overrideStyles : s.main}>
         <ReactEcharts
+          ref={this._chartRef}
           option={this._getChartOptions()}
           notMerge
           lazyUpdate
@@ -88,5 +145,6 @@ class Chart extends React.Component<ChartPropTypes> {
     );
   }
 }
+const ConnectedChart = connect(Chart.mapStateToProps)(Chart);
 
-export default withStyles(s)(Chart);
+export default withStyles(s)(ConnectedChart);

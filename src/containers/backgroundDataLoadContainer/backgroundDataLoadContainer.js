@@ -9,18 +9,18 @@ import type { ApolloClientType } from '../../core/ApolloClientType';
 import { updateBackgroundDataAction } from '../../actions/BackgroundDataActions';
 import generateAsyncAction from '../../actions/AsyncActionGenerator';
 
-type BackgroundDataLoadContainerInjectedPropTypes = {
+type BackgroundDataLoadContainerInjectedPropsType = {
   client: ApolloClientType,
 };
 
-type BackgroundDataLoadContainerConnectedPropTypes = {
+type BackgroundDataLoadContainerConnectedPropsType = {
   dispatch: DispatchFunctionType,
 };
 
-type BackgroundDataLoadContainerPropTypes = BackgroundDataLoadContainerInjectedPropTypes &
-  BackgroundDataLoadContainerConnectedPropTypes;
+type BackgroundDataLoadContainerPropsType = BackgroundDataLoadContainerInjectedPropsType &
+  BackgroundDataLoadContainerConnectedPropsType;
 
-class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDataLoadContainerPropTypes> {
+class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDataLoadContainerPropsType> {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     client: PropTypes.shape({
@@ -29,7 +29,7 @@ class BackgroundDataLoadContainerComponent extends React.Component<BackgroundDat
     }).isRequired,
   };
 
-  constructor(props: BackgroundDataLoadContainerPropTypes) {
+  constructor(props: BackgroundDataLoadContainerPropsType) {
     super(props);
 
     this.fetchBackgroundData();
