@@ -64,6 +64,7 @@ const getMultiChartOptions = (chartType: string, chartDataArray: Array<ChartData
       boundaryGap: false,
       data: chartDataArray[i].getDomainValues(),
       axisLabel: {
+        show: i === chartDataArray.length - 1,
         formatter: TimeUtilities.epochToLocalDate,
       },
     };
@@ -75,6 +76,9 @@ const getMultiChartOptions = (chartType: string, chartDataArray: Array<ChartData
         align: 'right',
         fontSize: '11',
         padding: [0, 0, 0, 10],
+      },
+      splitLine: {
+        show: false,
       },
     };
 
