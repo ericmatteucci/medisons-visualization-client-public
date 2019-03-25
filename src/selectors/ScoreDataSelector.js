@@ -5,6 +5,7 @@ import { ScoreDisplayNames } from '../constants/DisplayConstants';
 import type { ReduxStateType } from '../reducers/ReduxStateType';
 import type { ScoreTimestampType, ScoreValueListType } from '../data/reduxModels/ScoreDataModel';
 import ChartDataModel from '../data/models/ChartDataModel';
+import { NO_SCORE_VALUE } from '../constants/ValueConstants';
 
 const currentTimestamps = (state: ReduxStateType): ScoreTimestampType =>
   state.compositeScoreDataReducer.scoreData.timestamp;
@@ -42,6 +43,23 @@ export class ScoreDataSelector {
       return timestamps[timestamps.length - 1];
     }
     return 0;
+  };
+
+  /**
+   * Get the latest score for the specified data.
+   * @param data The data to find the latest score for.
+   * @returns {number} The latest score.
+   */
+  static getLatestScore = (data: ScoreValueListType): number => {
+    if (data !== undefined && data.length > 0) {
+      for (let i = data.length - 1; i >= 0; i--) {
+        if (data[i] !== null) {
+          return data[i];
+        }
+      }
+    }
+
+    return NO_SCORE_VALUE;
   };
 
   static getDerangementChartData = (
@@ -84,6 +102,11 @@ export class ScoreDataSelector {
 export const latestScoreTimeSelector = createSelector(
   [currentTimestamps],
   ScoreDataSelector.getLatestTime,
+);
+
+export const latestDerangementScoreSelector = createSelector(
+  [derangement],
+  ScoreDataSelector.getLatestScore,
 );
 
 export const derangementScoreSelector = createSelector(

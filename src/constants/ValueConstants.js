@@ -17,6 +17,8 @@ export const HEIGHT_DEFAULT_VALUE = -1;
 export const WEIGHT_DEFAULT_VALUE = -1;
 export const SEX_DEFAULT_VALUE = 'Select...';
 
+export const NO_SCORE_VALUE = -1;
+
 export const CHART_GROUP = 'CHART_GROUP';
 
 // Default values for the view range of the charts in percent.
