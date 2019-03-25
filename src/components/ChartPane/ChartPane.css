@@ -20,18 +20,3 @@
   flex-direction: column;
   align-content: space-evenly;
 }
-
-.column {
-  position: relative;
-  width: 100%;
-  height: 100%;
-
-  /* flex options for child components */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.chart {
-  width: 100%;
-}

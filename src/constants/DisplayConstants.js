@@ -17,8 +17,6 @@ export const DataInputModalErrorMessages = {
 
 export const EMPTY_VALUE_STRING = '-';
 
-export const MAIN_CHART_DISPLAY_NAME = 'Derangement';
-
 export const ScoreDisplayNames = {
   OXYGEN_SATURATION: 'Oxygen Saturation',
   ELECTROCARDIOGRAM: 'ECG',

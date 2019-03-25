@@ -54,13 +54,17 @@ class ChartPane extends React.Component<ChartPanePropTypes> {
   });
 
   render() {
+    const chartData = [
+      this.props.bloodPressureChartData,
+      this.props.electrocardiogramChartData,
+      this.props.oxygenSaturationChartData,
+      this.props.respiratoryRateChartData,
+      this.props.temperatureChartData,
+    ];
+
     return (
       <div className={s.main}>
-        <Chart type="line" chartData={this.props.bloodPressureChartData} showSlider={false} />
-        <Chart type="line" chartData={this.props.electrocardiogramChartData} showSlider={false} />
-        <Chart type="line" chartData={this.props.oxygenSaturationChartData} showSlider={false} />
-        <Chart type="line" chartData={this.props.respiratoryRateChartData} showSlider={false} />
-        <Chart type="line" chartData={this.props.temperatureChartData} showSlider={false} />
+        <Chart type="line" chartData={chartData} />
       </div>
     );
   }

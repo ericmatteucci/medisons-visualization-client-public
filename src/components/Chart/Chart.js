@@ -16,17 +16,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './Chart.css';
 import ChartDataModel from '../../data/models/ChartDataModel';
-import TimeUtilities from '../../lib/TimeUtilities';
-import {
-  CHART_GROUP,
-  DEFAULT_CHART_VIEW_END,
-  DEFAULT_CHART_VIEW_START,
-} from '../../constants/ValueConstants';
+import getChartOptions from '../../lib/ChartOptions';
+import { CHART_GROUP } from '../../constants/ValueConstants';
 
 type ChartInjectedPropsType = {
   type: string,
-  chartData: ChartDataModel,
-  showSlider: boolean,
+  chartData: Array<ChartDataModel>,
   overrideStyles: ?string,
   overrideChartStyle: ?Function,
 };
@@ -36,8 +31,7 @@ type ChartPropsType = ChartInjectedPropsType;
 class Chart extends React.Component<ChartPropsType> {
   static propTypes = {
     type: PropTypes.string.isRequired,
-    chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
-    showSlider: PropTypes.bool.isRequired,
+    chartData: PropTypes.arrayOf(PropTypes.instanceOf(ChartDataModel)).isRequired,
     overrideStyles: PropTypes.string,
     overrideChartStyle: PropTypes.func,
   };
@@ -46,17 +40,6 @@ class Chart extends React.Component<ChartPropsType> {
     overrideStyles: null,
     overrideChartStyle: null,
   };
-
-  static chartLabelFormatter(index: number, value: number) {
-    return TimeUtilities.epochToLocalDate(value);
-  }
-
-  static chartTooltipFormatter(params: Array<Object>) {
-    if (params[0].value) {
-      return `${TimeUtilities.epochToLocalDate(params[0].name)} - ${params[0].value.toFixed(2)}`;
-    }
-    return TimeUtilities.epochToLocalDate(params[0].name);
-  }
 
   componentDidMount() {
     if (this._initialChartRender) {
@@ -72,66 +55,33 @@ class Chart extends React.Component<ChartPropsType> {
     if (this.props.chartData !== nextProps.chartData) {
       const chart = this._chartRef.current.getEchartsInstance();
 
+      const numCharts = nextProps.chartData.length;
+
+      const series = new Array(numCharts);
+      const xAxis = new Array(numCharts);
+
+      for (let i = 0; i < numCharts; i++) {
+        series[i] = {
+          data: nextProps.chartData[i].getData(),
+        };
+
+        xAxis[i] = {
+          data: nextProps.chartData[i].getDomainValues(),
+        };
+      }
+
       chart.setOption({
-        series: [
-          {
-            data: this.props.chartData.getData(),
-          },
-        ],
-        xAxis: [
-          {
-            data: this.props.chartData.getDomainValues(),
-          },
-        ],
+        series,
+        xAxis,
       });
     }
 
     return false;
   }
 
-  /**
-   * Get the chart options for the chart object.
-   * @private
-   */
-  _getChartOptions = (): Object => ({
-    tooltip: {
-      trigger: 'axis',
-      formatter: Chart.chartTooltipFormatter,
-    },
-    xAxis: [
-      {
-        data: this.props.chartData.getDomainValues(),
-        axisLabel: {
-          formatter: TimeUtilities.epochToLocalDate,
-        },
-      },
-    ],
-    yAxis: {},
-    dataZoom: [
-      {
-        type: 'slider',
-        show: this.props.showSlider,
-        start: DEFAULT_CHART_VIEW_START,
-        end: DEFAULT_CHART_VIEW_END,
-        labelFormatter: Chart.chartLabelFormatter,
-      },
-      {
-        type: 'inside',
-        zoomOnMouseWheel: false,
-        start: DEFAULT_CHART_VIEW_START,
-        end: DEFAULT_CHART_VIEW_END,
-      },
-    ],
-    series: [
-      {
-        type: this.props.type,
-        data: this.props.chartData.getData(),
-      },
-    ],
-  });
-
   _getDefaultChartStyle = (): Object => ({
     height: '100%',
+    width: '100%',
   });
 
   // Local state variable to track if the chart has been initialized
@@ -145,7 +95,7 @@ class Chart extends React.Component<ChartPropsType> {
       <div className={this.props.overrideStyles ? this.props.overrideStyles : s.main}>
         <ReactEcharts
           ref={this._chartRef}
-          option={this._getChartOptions()}
+          option={getChartOptions(this.props.type, this.props.chartData)}
           notMerge
           lazyUpdate
           theme="theme_name"

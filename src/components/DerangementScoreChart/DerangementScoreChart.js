@@ -18,7 +18,6 @@ import s from './DerangementScoreChart.css';
 import Chart from '../Chart/Chart';
 import ChartDataModel from '../../data/models/ChartDataModel';
 import { derangementScoreSelector } from '../../selectors/ScoreDataSelector';
-import { MAIN_CHART_DISPLAY_NAME } from '../../constants/DisplayConstants';
 
 type DerangementScoreChartBoundPropTypes = {
   chartData: ChartDataModel,
@@ -43,13 +42,7 @@ class DerangementScoreChart extends React.Component<DerangementScoreChartPropTyp
   render() {
     return (
       <div className={s.main}>
-        <Chart
-          type="line"
-          title={MAIN_CHART_DISPLAY_NAME}
-          chartData={this.props.chartData}
-          overrideStyles={s.chart}
-          showSlider
-        />
+        <Chart type="line" chartData={[this.props.chartData]} overrideStyles={s.chart} />
       </div>
     );
   }
