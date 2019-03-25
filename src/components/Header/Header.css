@@ -42,13 +42,14 @@
 .bannerTitle {
   margin: 0;
   font-weight: normal;
-  font-size: 4vw;
+  font-size: 3.25vw;
   line-height: 1em;
+  padding: 0 0 1%;
 }
 
 .bannerDesc {
-  padding: 1%;
+  padding: 1.5% 0 0;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 1.25vw;
+  font-size: 1.5vw;
   margin: 0;
 }

@@ -16,21 +16,22 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 // eslint-disable-next-line css-modules/no-unused-class
 import s from './Chart.css';
 import ChartDataModel from '../../data/models/ChartDataModel';
-import TimeUtilities from '../../lib/TimeUtilities';
+import getChartOptions from '../../lib/ChartOptions';
+import { CHART_GROUP } from '../../constants/ValueConstants';
 
-type ChartInjectedPropTypes = {
+type ChartInjectedPropsType = {
   type: string,
-  chartData: ChartDataModel,
+  chartData: Array<ChartDataModel>,
   overrideStyles: ?string,
   overrideChartStyle: ?Function,
 };
 
-type ChartPropTypes = ChartInjectedPropTypes;
+type ChartPropsType = ChartInjectedPropsType;
 
-class Chart extends React.Component<ChartPropTypes> {
+class Chart extends React.Component<ChartPropsType> {
   static propTypes = {
     type: PropTypes.string.isRequired,
-    chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
+    chartData: PropTypes.arrayOf(PropTypes.instanceOf(ChartDataModel)).isRequired,
     overrideStyles: PropTypes.string,
     overrideChartStyle: PropTypes.func,
   };
@@ -40,40 +41,61 @@ class Chart extends React.Component<ChartPropTypes> {
     overrideChartStyle: null,
   };
 
-  /**
-   * Get the chart options for the chart object.
-   * @private
-   */
-  _getChartOptions = (): Object => ({
-    title: {
-      text: this.props.chartData.getName(),
-    },
-    tooltip: {},
-    xAxis: {
-      data: this.props.chartData.getDomainValues(),
-      axisLabel: {
-        formatter: TimeUtilities.epochToLocalDate,
-      },
-    },
-    yAxis: {},
-    series: [
-      {
-        type: this.props.type,
-        data: this.props.chartData.getData(),
-      },
-    ],
-  });
+  componentDidMount() {
+    if (this._initialChartRender) {
+      // This allows us to connect the charts together so
+      // they can be zoomed and panned in unison.
+      const chart = this._chartRef.current.getEchartsInstance();
+      chart.group = CHART_GROUP;
+      this._initialChartRender = false;
+    }
+  }
+
+  shouldComponentUpdate(nextProps: ChartPropsType) {
+    if (this.props.chartData !== nextProps.chartData) {
+      const chart = this._chartRef.current.getEchartsInstance();
+
+      const numCharts = nextProps.chartData.length;
+
+      const series = new Array(numCharts);
+      const xAxis = new Array(numCharts);
+
+      for (let i = 0; i < numCharts; i++) {
+        series[i] = {
+          data: nextProps.chartData[i].getData(),
+        };
+
+        xAxis[i] = {
+          data: nextProps.chartData[i].getDomainValues(),
+        };
+      }
+
+      chart.setOption({
+        series,
+        xAxis,
+      });
+    }
+
+    return false;
+  }
 
   _getDefaultChartStyle = (): Object => ({
-    width: '100%',
     height: '100%',
+    width: '100%',
   });
+
+  // Local state variable to track if the chart has been initialized
+  _initialChartRender = true;
+
+  // The ref for this chart
+  _chartRef = React.createRef();
 
   render() {
     return (
       <div className={this.props.overrideStyles ? this.props.overrideStyles : s.main}>
         <ReactEcharts
-          option={this._getChartOptions()}
+          ref={this._chartRef}
+          option={getChartOptions(this.props.type, this.props.chartData)}
           notMerge
           lazyUpdate
           theme="theme_name"

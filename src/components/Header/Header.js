@@ -25,8 +25,8 @@ class Header extends React.Component<HeaderPropTypes> {
       <div className={s.root}>
         <div className={s.container}>
           <div className={s.banner}>
-            <h1 className={s.bannerTitle}>MediSons</h1>
-            <p className={s.bannerDesc}>PhysioRange</p>
+            <h1 className={s.bannerTitle}>PhysioRange</h1>
+            <p className={s.bannerDesc}>MediSons</p>
           </div>
           <BackgroundDataPane />
           <DataInputModal />

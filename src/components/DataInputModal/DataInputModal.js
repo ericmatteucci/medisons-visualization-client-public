@@ -115,7 +115,7 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
 
     if (
       this.state.ageInputState !== '' &&
-      (!Number(this.state.ageInputState) || Number(this.state.ageInputState) <= 0)
+      (Number(this.state.ageInputState) === 'NaN' || Number(this.state.ageInputState) < 0)
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.AGE_ERROR });
       ret = false;

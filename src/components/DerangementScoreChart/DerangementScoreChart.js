@@ -17,11 +17,16 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './DerangementScoreChart.css';
 import Chart from '../Chart/Chart';
 import ChartDataModel from '../../data/models/ChartDataModel';
-import { derangementScoreSelector } from '../../selectors/ScoreDataSelector';
-import { MAIN_CHART_DISPLAY_NAME } from '../../constants/DisplayConstants';
+import {
+  derangementScoreSelector,
+  latestDerangementScoreSelector,
+} from '../../selectors/ScoreDataSelector';
+import { NO_SCORE_VALUE } from '../../constants/ValueConstants';
+import { EMPTY_VALUE_STRING } from '../../constants/DisplayConstants';
 
 type DerangementScoreChartBoundPropTypes = {
   chartData: ChartDataModel,
+  latestScore: number,
 };
 
 type DerangementScoreChartPropTypes = DerangementScoreChartBoundPropTypes;
@@ -34,21 +39,24 @@ type DerangementScoreChartPropTypes = DerangementScoreChartBoundPropTypes;
 class DerangementScoreChart extends React.Component<DerangementScoreChartPropTypes> {
   static propTypes = {
     chartData: PropTypes.instanceOf(ChartDataModel).isRequired,
+    latestScore: PropTypes.number.isRequired,
   };
 
   static mapStateToProps = (state: any): DerangementScoreChartBoundPropTypes => ({
     chartData: derangementScoreSelector(state),
+    latestScore: latestDerangementScoreSelector(state),
   });
 
   render() {
+    const latestScore =
+      this.props.latestScore === NO_SCORE_VALUE
+        ? EMPTY_VALUE_STRING
+        : this.props.latestScore.toFixed(2);
+
     return (
       <div className={s.main}>
-        <Chart
-          type="line"
-          title={MAIN_CHART_DISPLAY_NAME}
-          chartData={this.props.chartData}
-          overrideStyles={s.chart}
-        />
+        <p className={s.latestScore}>{latestScore}</p>
+        <Chart type="line" chartData={[this.props.chartData]} overrideStyles={s.chart} />
       </div>
     );
   }

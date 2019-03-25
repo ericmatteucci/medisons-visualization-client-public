@@ -17,22 +17,6 @@
   /* flex options for child components */
   display: flex;
   flex: 1;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-.column {
-  position: relative;
-  width: 50%;
-  height: 100%;
-
-  /* flex options for child components */
-  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-}
-
-.chart {
-  height: 50%;
-  width: 100%;
+  align-content: space-evenly;
 }
