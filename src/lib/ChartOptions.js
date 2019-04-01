@@ -4,10 +4,15 @@ import ChartDataModel from '../data/models/ChartDataModel';
 import TimeUtilities from './TimeUtilities';
 import LabelFormatter from './LabelFormatter';
 import { DEFAULT_CHART_VIEW_END, DEFAULT_CHART_VIEW_START } from '../constants/ValueConstants';
+import { MAIN_CHART_Y_AXIS_LABEL } from '../constants/DisplayConstants';
 
 const getSingleChartOptions = (chartType: string, chartData: ChartDataModel): Object => ({
   title: {
     text: chartData.getName(),
+    textStyle: {
+      fontSize: 24,
+    },
+    padding: [0, 0, 0, 15],
   },
   tooltip: {
     trigger: 'axis',
@@ -26,7 +31,15 @@ const getSingleChartOptions = (chartType: string, chartData: ChartDataModel): Ob
       },
     },
   ],
-  yAxis: {},
+  yAxis: {
+    name: MAIN_CHART_Y_AXIS_LABEL,
+    nameRotate: 90,
+    nameLocation: 'middle',
+    nameTextStyle: {
+      padding: 15,
+      fontSize: 16,
+    },
+  },
   dataZoom: [
     {
       type: 'slider',
@@ -74,8 +87,7 @@ const getMultiChartOptions = (chartType: string, chartDataArray: Array<ChartData
       gridIndex: i,
       nameTextStyle: {
         align: 'right',
-        fontSize: '11',
-        padding: [0, 0, 0, 10],
+        padding: [0, 0, 0, chartDataArray[i].getName().length * 4.5],
       },
       splitLine: {
         show: false,

@@ -13,13 +13,21 @@ https://github.com/nullivex/nodist
 To install dependencies, run the following:
 
 ```text
-npm install
+yarn install
 ```
 
 #### Running the Client
 
+To run the client with debug enabled:
+
 ```text
-npm start
+yarn start
+```
+
+To run the client without debug:
+
+```text
+yarn release
 ```
 
 This should automatically launch a new browser tab client running on
