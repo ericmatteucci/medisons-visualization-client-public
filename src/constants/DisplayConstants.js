@@ -18,10 +18,12 @@ export const DataInputModalErrorMessages = {
 export const EMPTY_VALUE_STRING = '-';
 
 export const ScoreDisplayNames = {
-  OXYGEN_SATURATION: 'Oxygen Saturation',
-  ELECTROCARDIOGRAM: 'ECG',
-  BLOOD_PRESSURE: 'Blood Pressure',
-  RESPIRATORY_RATE: 'Respiratory Rate',
-  TEMPERATURE: 'Temperature',
-  DERANGEMENT: 'Derangement',
+  OXYGEN_SATURATION: 'Oxygen Saturation Derangement',
+  ELECTROCARDIOGRAM: 'ECG Derangement',
+  BLOOD_PRESSURE: 'Blood Pressure Derangement',
+  RESPIRATORY_RATE: 'Respiratory Rate Derangement',
+  TEMPERATURE: 'Temperature Derangement',
+  DERANGEMENT: 'Aggregated Derangement',
 };
+
+export const MAIN_CHART_Y_AXIS_LABEL = 'Deviation';

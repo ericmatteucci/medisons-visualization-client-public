@@ -114,20 +114,23 @@ class DataInputModal extends React.Component<DataInputModalPropTypes, DataInputM
     let ret = true;
 
     if (
-      this.state.ageInputState !== '' &&
-      (Number(this.state.ageInputState) === 'NaN' || Number(this.state.ageInputState) < 0)
+      this.state.ageInputState === '' ||
+      Number.isNaN(Number(this.state.ageInputState)) ||
+      Number(this.state.ageInputState) < 0
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.AGE_ERROR });
       ret = false;
     } else if (
-      this.state.heightInputState !== '' &&
-      (!Number(this.state.heightInputState) || Number(this.state.heightInputState) <= 0)
+      this.state.heightInputState === '' ||
+      !Number(this.state.heightInputState) ||
+      Number(this.state.heightInputState) <= 0
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.HEIGHT_ERROR });
       ret = false;
     } else if (
-      this.state.weightInputState !== '' &&
-      (!Number(this.state.weightInputState) || Number(this.state.weightInputState) <= 0)
+      this.state.weightInputState === '' ||
+      !Number(this.state.weightInputState) ||
+      Number(this.state.weightInputState) <= 0
     ) {
       this.setState({ errorMessage: DataInputModalErrorMessages.WEIGHT_ERROR });
       ret = false;
